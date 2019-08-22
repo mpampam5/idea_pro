@@ -1,39 +1,50 @@
-
-  <div class="row">
-    <div class="col-md-12 grid-margin">
-      <div class="row">
-        <div class="col-12 col-xl-5 mb-4 mb-xl-0">
-          <h4 class="font-weight-bold">Hi, Welcomeback!</h4>
-          <h4 class="font-weight-normal mb-0">JustDo Dashboard,</h4>
-        </div>
-        <div class="col-12 col-xl-7">
-          <div class="d-flex align-items-center justify-content-between flex-wrap">
-            <div class="border-right pr-4 mb-3 mb-xl-0">
-              <p class="text-muted">Balance</p>
-              <h4 class="mb-0 font-weight-bold">$40079.60 M</h4>
-            </div>
-            <div class="border-right pr-4 mb-3 mb-xl-0">
-              <p class="text-muted">Today’s profit</p>
-              <h4 class="mb-0 font-weight-bold">$175.00 M</h4>
-            </div>
-            <div class="border-right pr-4 mb-3 mb-xl-0">
-              <p class="text-muted">Purchases</p>
-              <h4 class="mb-0 font-weight-bold">4006</h4>
-            </div>
-            <div class="pr-3 mb-3 mb-xl-0">
-              <p class="text-muted">Downloads</p>
-              <h4 class="mb-0 font-weight-bold">4006</h4>
-            </div>
-            <div class="mb-3 mb-xl-0">
-              <button class="btn btn-warning rounded-0 text-white">Downloads</button>
-            </div>
-          </div>
+<div class="row">
+  <div class="col-md-3 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left">Member ON</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$member_on?></h3>
+          <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="col-md-3 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left">Member OFF</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$member_off?></h3>
+          <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="col-md-3 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left">Deposit Pending</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$deposit_pending;?></h3>
+          <i class="fa fa-credit-card-alt icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
+  <div class="col-md-3 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left">Withdraw Pending</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$withdraw_pending;?></h3>
+          <i class="fa fa-credit-card icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+        </div>
+      </div>
+    </div>
+  </div>
   
+</div>

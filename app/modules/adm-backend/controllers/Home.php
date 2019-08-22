@@ -9,13 +9,17 @@ class Home extends MY_Controller{
   {
     parent::__construct();
     //Codeigniter : Write Less Do More
-    // $this->load->model('Crud_model','model');
+    $this->load->model('Home_model','model');
   }
 
   function index()
   {
     $this->template->set_title("home");
-    $this->template->view("content/home/index");
+    $data['member_on'] =  $this->model->get_member('1');
+    $data['member_off'] =  $this->model->get_member('0');
+    $data['deposit_pending'] =  $this->model->deposit_pending();
+    $data['withdraw_pending'] =  $this->model->withdraw_pending();
+    $this->template->view("content/home/index",$data);
   }
 
 

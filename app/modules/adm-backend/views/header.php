@@ -134,7 +134,7 @@
             <div class="collapse" id="deposit-menu">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/deposit/deposit_pending")?>">Deposit Pending</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/deposit/deposit_verifikasi")?>">Deposit Terverifikasi</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/deposit/deposit_verifikasi")?>">Deposit Approved</a></li>
               </ul>
             </div>
           </li>
@@ -147,8 +147,8 @@
             </a>
             <div class="collapse" id="withdraw-menu">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/withdraw/withdraw_pending")?>">Add Withdraw</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/withdraw/withdraw_verifikasi")?>">All Withdraw</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/withdraw/withdraw_pending")?>">Withdraw Pending</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/withdraw/withdraw_verifikasi")?>">Withdraw Approved</a></li>
               </ul>
             </div>
           </li>
