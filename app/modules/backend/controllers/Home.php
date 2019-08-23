@@ -19,7 +19,7 @@ class Home extends MY_Controller{
     $data['comission']  = $this->balance->sponsor(sess('id_member'));
     $data['deposit'] = $this->balance->deposit(sess('id_member'));
     $data['withdraw'] = $this->balance->withdraw(sess('id_member'));
-    $data['referral'] = $this->balance->referral(sess('id_member'));
+    $data['referral'] = $this->balance->referral(profile('kode_referral'));
     $data['left_group'] = $this->btree->leftcount(sess('id_member'));
     $data['right_group'] = $this->btree->rightcount(sess('id_member'));
     $data['pin_terpakai'] = $this->balance->cek_pin_terpakai(sess('id_member'));

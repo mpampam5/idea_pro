@@ -29,7 +29,7 @@ function sponsor($id_member)
                                       bonus_sponsor.id_member,
                                       SUM(bonus_sponsor.total_bonus) AS total_bonus")
                   ->from('bonus_sponsor')
-                  ->where('bonus_sponsor.id_parent',sess('id_member'))
+                  ->where('bonus_sponsor.id_parent',$id_member)
                   ->get();
   return $query->row()->total_bonus;
 }
@@ -42,7 +42,7 @@ function pairing($id_member)
                               bonus_pairing.id_member,
                               SUM(bonus_pairing.total_bonus) AS total_bonus")
                   ->from('bonus_pairing')
-                  ->where('bonus_pairing.id_member',sess('id_member'))
+                  ->where('bonus_pairing.id_member',$id_member)
                   ->get();
   return $query->row()->total_bonus;
 }
@@ -219,10 +219,10 @@ function get_bonus_sponsor($jenis_paket){
 }
 
 // Total Referral Member
-function referral($id_member)
+function referral($kode_referral)
 {
   $ci =& get_instance();
-  $kode_referral = profile('kode_referral');
+  // $kode_referral = profile('kode_referral');
   $query = $ci->db->select('tb_member.id_member,
                             tb_member.referral_from,
                             tb_member.is_verifikasi')

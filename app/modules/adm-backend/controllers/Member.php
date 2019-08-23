@@ -34,8 +34,20 @@ class Member extends MY_Controller{
 
   function detail($id){
     if ($row = $this->model->get_where_detail(["tb_member.id_member"=>$id])) {
+      $this->load->library(array('balance','btree'));
       $this->template->set_title("Member");
+
       $data = [
+                "balance"     =>$this->balance->total_balance($id),
+                // 'comission'  => $this->balance->sponsor($id),
+                // 'deposit' => $this->balance->deposit($id),
+                // 'withdraw' => $this->balance->withdraw($id),
+                'referral' => $this->balance->referral($row->kode_referral),
+                'left_group' => $this->btree->leftcount($id),
+                'right_group' => $this->btree->rightcount($id),
+                'pin_terpakai' => $this->balance->cek_pin_terpakai($id),
+                'stok_pin' => $this->balance->stok_pin($id),
+                'total_order_pin' => $this->balance->total_order_pin($id),
                 "button"      => "detail",
                 "row"         => $row,
                 "is_active"   => $row->is_active,

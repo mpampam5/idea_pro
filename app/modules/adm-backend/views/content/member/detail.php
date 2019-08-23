@@ -6,13 +6,86 @@
   </ol>
 </nav>
 
+<div class="row">
+  <div class="col-12 m-b-10 p-b-10">
+    <div class="card">
+      <div class="card-body">
+        <div class="col-lg-12">
+            <div class="border-bottom text-center pb-4">
+            <img src="<?=base_url()?>_template/back/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3">
+            <div class="mb-3">
+              <h3><?=$row->nama?></h3>
+              <p class="w-75 mx-auto mb-3">
+                Mulai Bergabung  <?=date('d/m/Y',strtotime($row->created))?>
+              </p>
+            </div>
+
+            <div class="justify-content-center">
+              <div class="row">
+                <div class="col-md-3 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="card-title text-md-center text-xl-left">Balance</p>
+                      <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                        <h4 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">Rp.<?=format_rupiah($balance)?></h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="card-title text-md-center text-xl-left">Total Referral</p>
+                      <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                        <h4 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$referral?></h4>
+                        <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="card-title text-md-center text-xl-left">Group Left</p>
+                      <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                        <h4 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$left_group?></h4>
+                        <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="card-title text-md-center text-xl-left">Group Right</p>
+                      <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                        <h4 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$right_group?></h4>
+                        <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <!-- open row -->
 <div class="row">
 
   <div class="col-lg-12 m-b-10">
     <div class="card card-akun">
-      <div class="card-header bg-primary text-white">
+      <div class="card-header bg-warning text-white">
         <h4>Data Akun</h4>
       </div>
       <div class="card-body">
@@ -27,7 +100,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Link Referral</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" readonly value="<?=$row->kode_referral?>">
+              <input type="text" class="form-control" readonly value="<?=site_url("referral/$row->kode_referral")?>">
             </div>
           </div>
 
@@ -144,7 +217,7 @@
 
   <div class="col-lg-12">
     <div class="card card-personal">
-      <div class="card-header bg-primary text-white">
+      <div class="card-header bg-warning text-white">
         <h4>Data Personal</h4>
       </div>
       <div class="card-body">
