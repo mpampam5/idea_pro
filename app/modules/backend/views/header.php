@@ -215,6 +215,7 @@
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/member/menunggu_verifikasi")?>">Waiting</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pohon_jaringan")?>">Binary</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/member/my_referral")?>">Referral</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/upgrade_paket")?>">Upgrade Paket</a></li>
               </ul>
             </div>
           </li>

@@ -93,7 +93,7 @@ $(document).ready(function() {
               {"data":"username","visible":false},
               {"data":"paket","visible":false},
           ],
-          order: [[0, 'desc']],
+          order: [[1, 'desc']],
       });
 });
 

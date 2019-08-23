@@ -84,7 +84,11 @@ $(document).ready(function() {
                  if (data==null) {
                      var str = '<p class="text-center"> - </p>';
                  }else {
+                   if (row.status_pakai=="registrasi") {
                      var str = '<b>'+data+'</b>&nbsp;|&nbsp;<b class="text-info">'+row.username+'</b>&nbsp;|&nbsp;<b class="text-danger">'+row.paket.toUpperCase()+'</b>';
+                   }else {
+                     var str = row.keterangan;
+                   }
                  }
 
                  return str;
@@ -120,6 +124,14 @@ $(document).ready(function() {
               },
               {
                 "data": "username",
+                "visible":false
+              },
+              {
+                "data": "status_pakai",
+                "visible":false
+              },
+              {
+                "data": "keterangan",
                 "visible":false
               },
 
