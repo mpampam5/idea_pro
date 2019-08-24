@@ -24,28 +24,28 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="">Nama</label>
-                  <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+                  <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="<?=$nama?>">
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="">Telepon</label>
-                  <input type="text" class="form-control" id="telepon" name="telepon" placeholder="Telepon">
+                  <input type="text" class="form-control" id="telepon" name="telepon" placeholder="Telepon" value="<?=$telepon?>">
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="">Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                  <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?=$email?>">
                 </div>
               </div>
 
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="">Alamat</label>
-                  <textarea class="form-control" name="alamat" id="alamat" rows="8" cols="80" placeholder="Alamat"></textarea>
+                  <textarea class="form-control" name="alamat" id="alamat" rows="8" cols="80" placeholder="Alamat"><?=$alamat?></textarea>
                 </div>
               </div>
 
@@ -86,7 +86,7 @@ $("#form").submit(function(e){
               $.toast({
                 text: json.alert,
                 showHideTransition: 'slide',
-                icon: 'success',
+                icon: json.status,
                 loaderBg: '#f96868',
                 position: 'bottom-right',
                 afterHidden: function () {

@@ -14,8 +14,8 @@ class Crud extends MY_Controller{
 
   function _rules()
   {
-    $this->form_validation->set_rules("nama","Nama","trim|xss_clean|required");
-    $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|required|numeric");
+    $this->form_validation->set_rules("nama","Nama","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|htmlspecialchars|required|numeric");
     $this->form_validation->set_rules("email","Email","trim|xss_clean|required");
     $this->form_validation->set_rules("alamat","Alamat","trim|xss_clean|required");
     $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
@@ -55,9 +55,10 @@ class Crud extends MY_Controller{
   function add_action()
   {
     if ($this->input->is_ajax_request()) {
-      $json = array('success'=>false, 'alert'=>array());
+      $json = array('success'=>false,'status'=>array(), 'alert'=>array());
       $this->_rules();
       if ($this->form_validation->run()) {
+        $this->db->trans_start();
         $data = [
                   "nama"    => $this->input->post("nama",true),
                   "telepon" => $this->input->post("telepon",true),
@@ -65,7 +66,22 @@ class Crud extends MY_Controller{
                   "email"   => $this->input->post("email",true),
                 ];
         $this->model->get_insert("crud",$data);
-        $json['alert'] = "Data Berhasil Di Simpan";
+
+        // $insert_bank = array('bansk' => "INDONESIA");
+        //
+        // $this->model->get_insert('ref_bank',$insert_bank);
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+            {
+              $this->db->trans_rollback();
+              $json['status'] = "error";
+              $json['alert'] = "Gagal Menyimpan";
+            }else{
+              $this->db->trans_commit();
+              $json['status'] = "success";
+              $json['alert'] = "Data Berhasil Di Simpan";
+            }
         $json['success'] =  true;
       }else {
         foreach ($_POST as $key => $value)
@@ -84,10 +100,10 @@ class Crud extends MY_Controller{
         $data = [
                   'button' => 'Tambah',
                   'action' => site_url('backend/crud/update_action'),
-  								'nama'	=>	set_value('nama'),
-  								'telepon'	=>	set_value('telepon'),
-  								'email'	=>	set_value('email'),
-                  'alamat'	=>	set_value('alamat'),
+  								'nama'	=>	set_value('nama',$row->nama),
+  								'telepon'	=>	set_value('telepon',$row->telepon),
+  								'email'	=>	set_value('email',$row->email),
+                  'alamat'	=>	set_value('alamat',$row->alamat),
   							];
       $this->template->view('content/crud/form',$data);
     }else {
