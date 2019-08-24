@@ -65,7 +65,7 @@
 
               <div id="alert"></div>
               <p class="text-center">
-                Silahkan isi form dibawah untuk mendapatkan link reset password atau anda bisa menghubungi admin dengan melampirkan identitas sesuai akun anda.
+                Silahkan isi form dibawah. kami akan mengirimkan link reset password ke Email yang terdaftar di Akun anda atau anda bisa menghubungi Admin dengan melampirkan identitas sesuai data Akun anda.
               </p>
               <form class="pt-3" autocomplete="off" action="<?=$action?>" id="form">
                 <div class="row">
@@ -73,7 +73,7 @@
 
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <input type="text"  class="form-control form-control-sm" id="email" name="email" placeholder="Masukkan Email Anda">
+                      <input type="text"  class="form-control form-control-sm" id="username" name="username" placeholder="Masukkan username Anda">
                     </div>
                   </div>
 
