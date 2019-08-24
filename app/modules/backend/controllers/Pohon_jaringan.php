@@ -73,7 +73,7 @@ class Pohon_jaringan extends MY_Controller{
 
   function _rules()
   {
-    $this->form_validation->set_rules("kode_referal","Kode Referral","trim|xss_clean|required|callback__cek_kode_ref",[
+    $this->form_validation->set_rules("kode_referal","Username","trim|xss_clean|required|callback__cek_kode_ref",[
       "required" => "Silahkan masukkan kode referal mitra anda."
     ]);
 
@@ -142,7 +142,7 @@ class Pohon_jaringan extends MY_Controller{
 
 
             $insert_member = [  "kode_referral" => "ref_$username",
-                                "referral_from" => $kode_referral ,
+                                "referral_from" => "ref_".$kode_referral ,
                                 "kode_register" => "MEM".date('dmYhis'),
                                 "nik"           => $nik,
                                 "nama"          => $nama,
@@ -228,7 +228,7 @@ class Pohon_jaringan extends MY_Controller{
 
           //insert bonus SPONSOR
           //cari id_member yang mempunyai kode referral hasil inputan
-          $id_member_referral = profile_member_where(['kode_referral'=>$kode_referral],"id_member");
+          $id_member_referral = profile_member_where(['kode_referral'=>"ref_".$kode_referral],"id_member");
 
           $inser_b_sponsor = array('id_parent' =>  $id_member_referral,
                                     'id_member' => $last_id_member,
@@ -263,11 +263,25 @@ class Pohon_jaringan extends MY_Controller{
 
   function _cek_kode_ref($str)
   {
-      $qry = $this->db->get_where("tb_member",["kode_referral"=>$str, "is_verifikasi"=>"1"]);
-      if ($qry->num_rows() > 0) {
+    $where = array('tb_member.is_active' => '1',
+                    'tb_member.is_verifikasi' => '1',
+                    'tb_auth.level' => 'member',
+                    'tb_auth.username' => $str);
+      $query = $this->db->select("tb_member.id_member,
+                                  tb_member.is_active,
+                                  tb_member.is_verifikasi,
+                                  tb_auth.id_auth,
+                                  tb_auth.username,
+                                  tb_auth.level")
+                            ->from("tb_member")
+                            ->join("tb_auth","tb_member.id_member = tb_auth.id_personal")
+                            ->where($where)
+                            ->get();
+      // $qry = $this->db->get_where("tb_member",["kode_referral"=>$str, "is_verifikasi"=>"1"]);
+      if ($query->num_rows() > 0) {
         return true;
       }else {
-        $this->form_validation->set_message('_cek_kode_ref', 'Kode referal yang anda masukkan tidak terdaftar');
+        $this->form_validation->set_message('_cek_kode_ref', 'Username yang anda masukkan tidak terdaftar');
         return false;
       }
   }

@@ -19,8 +19,8 @@
 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="">Kode Referral</label>
-                <input type="text"  class="form-control form-control-sm" id="kode_referal" name="kode_referal" value="<?=sess('kode_referral')?>" placeholder="Kode Referral" >
+                <label for="">Username Anda/Mitra Anda</label>
+                <input type="text"  class="form-control form-control-sm" id="kode_referal" name="kode_referal" value="<?=profile('username')?>" placeholder="Kode Referral" >
               </div>
             </div>
 
@@ -55,7 +55,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="">Tanggal Lahir</label>
-                <input type="text" class="form-control-sm form-control" data-provide="datepicker" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal Lahir">
+                <input type="text" class="form-control-sm form-control" autocomplete="off" data-provide="datepicker" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal Lahir">
               </div>
             </div>
 
