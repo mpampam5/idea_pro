@@ -264,6 +264,44 @@ function pairing($id)
     return;
   }
 
+  function view_template()
+  {
+    $this->load->view('content/contoh/email_template');
+  }
+
+  function send_email()
+	{
+		$email =  "mpampam5@gmail.com";
+		$subject = "Reset Password";
+		$desc = $this->load->view('content/contoh/email_template',array(),TRUE);
+		          $this->load->library('email');
+		      	  $config = array();
+		      	  $config['charset'] = 'utf-8';
+		      	  $config['useragent'] = 'Codeigniter';
+		      	  $config['protocol']= "smtp";
+		      	  $config['mailtype']= "html";
+		      	  $config['smtp_host']= "ssl://mail.mpampam.com";//pengaturan smtp
+		      	  $config['smtp_port']= "465";
+		      	  $config['smtp_timeout']= "400";
+		      	  $config['smtp_user']= "info@mpampam.com"; // isi dengan email kamu
+		      	  $config['smtp_pass']= "@@111111qwerty"; // isi dengan password kamu
+		      	  $config['crlf']="\r\n";
+		      	  $config['newline']="\r\n";
+		      	  $config['wordwrap'] = TRUE;
+		      	  //memanggil library email dan set konfigurasi untuk pengiriman email
+		      	      $this->email->initialize($config);
+		      	      //konfigurasi pengiriman
+		      	      $this->email->from($config['smtp_user']);
+		      	      $this->email->to($email);
+		      	      $this->email->subject($subject);
+		      	      $this->email->message($desc);
+		      	  		if ($this->email->send()) {
+		      	  				echo "email berhasil dikirim";
+		      	  		}else {
+		      	  			echo "gagal mengirim email</br> <a href=".base_url().">Kembali</a>";
+		      	  		}
+	}
+
 
 
 } //end class contoh
