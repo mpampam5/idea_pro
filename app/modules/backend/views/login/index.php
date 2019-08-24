@@ -50,10 +50,10 @@
                       Keep me signed in
                     </label> -->
                   </div>
-                  <a href="#" class="auth-link text-black">Lupa password?</a>
+                  <a href="<?=site_url("member-reset-password")?>" class="auth-link text-primary">Lupa password?</a>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
-                  Belum punya akun? <a href="<?=site_url("member-register")?>" class="text-primary">Register</a>
+                  Belum punya akun? <a href="<?=site_url("member-register")?>" class="text-primary">Registrasi</a>
                 </div>
               </form>
             </div>

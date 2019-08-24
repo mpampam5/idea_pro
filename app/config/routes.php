@@ -67,6 +67,8 @@ $route['member-register'] = 'backend/register/register';
 $route['referral/(:any)'] = 'backend/register/register/referral/$1';
 $route['member-register/action'] = 'backend/register/register/action';
 
+$route['member-reset-password'] = 'backend/reset_password/reset_password';
+
 $route['member-register/jsonkabupaten'] = 'backend/register/register/kabupaten';
 $route['member-register/jsonkecamatan'] = 'backend/register/register/kecamatan';
 $route['member-register/jsonkelurahan'] = 'backend/register/register/kelurahan';

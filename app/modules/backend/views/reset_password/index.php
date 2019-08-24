@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.urbanui.com/justdo/template/demo/vertical-default-light/pages/samples/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2019 23:08:25 GMT -->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Reset Password</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="<?=base_url()?>_template/back/css/style.css">
+  <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/jquery-toast-plugin/jquery.toast.min.css">
+  <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="<?=base_url()?>_template/back/images/favicon.png" />
+
+  <style media="screen">
+  .datepicker table{
+    width: 100%;
+  }
+
+  .auth .auth-form-light select{
+    color: #2b2b2b;
+  }
+
+  .title-form{
+    color: #179be6;
+    margin-bottom: 1.2rem;
+    text-transform: capitalize;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  input:-moz-read-only { /* For Firefox */
+    background-color: #dfdfdf!important;
+  }
+
+  input:read-only {
+    background-color: #dfdfdf!important;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="text-center mb-3">
+                <h3>Reset Password</h3>
+              </div>
+              <!-- <div class="brand-logo">
+                <img src="http://www.urbanui.com/justdo/template/images/logo.svg" alt="logo">
+              </div> -->
+
+              <div id="alert"></div>
+              <p class="text-center">
+                Silahkan isi form dibawah untuk mendapatkan link reset password atau anda bisa menghubungi admin dengan melampirkan identitas sesuai akun anda.
+              </p>
+              <form class="pt-3" autocomplete="off" action="<?=$action?>" id="form">
+                <div class="row">
+
+
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <input type="text"  class="form-control form-control-sm" id="email" name="email" placeholder="Masukkan Email Anda">
+                    </div>
+                  </div>
+
+
+
+
+
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="submit" id="submit">Reset Password</button>
+                </div>
+
+                <div class="col-sm-12 text-center mt-4 font-weight-light">
+                  <!-- <h5>Baca <a href="#">Aturan</a></h5> -->
+                <a href="<?=site_url("member-panel")?>" class="text-primary">Login</a> | <a href="<?=site_url("member-register")?>" class="text-primary"> Registrasi</a>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="<?=base_url()?>_template/back/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="<?=base_url()?>_template/back/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="<?=base_url()?>_template/back/js/off-canvas.js"></script>
+  <script src="<?=base_url()?>_template/back/js/hoverable-collapse.js"></script>
+  <script src="<?=base_url()?>_template/back/js/template.js"></script>
+  <script src="<?=base_url()?>_template/back/js/settings.js"></script>
+  <script src="<?=base_url()?>_template/back/js/todolist.js"></script>
+  <!-- endinject -->
+  <script src="<?=base_url()?>_template/back/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+
+
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+      $('#robot').click(function(){
+        $(this).is(':checked') ? $('#submit').prop('disabled', false) : $('#submit').prop('disabled',true);
+
+      });
+
+      $('#tgl_lahir').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+      });
+  });
+
+
+  $("#form").submit(function(e){
+    e.preventDefault();
+    var me = $(this);
+    $("#submit").prop('disabled',true).html('<div class="spinner-border spinner-border-sm text-white"></div> Memproses...');
+    $.ajax({
+          url             : me.attr('action'),
+          type            : 'post',
+          data            :  new FormData(this),
+          contentType     : false,
+          cache           : false,
+          dataType        : 'JSON',
+          processData     :false,
+          success:function(json){
+            if (json.success==true) {
+              $("#form")[0].reset();
+              $("#form").find('.text-danger').remove();
+              $("html, body").animate({ scrollTop: 0 }, "slow");
+              $("#submit").prop('disabled',true)
+                          .html('Registrasi');
+              $('#alert').hide().fadeIn(1000).html(`<div class="row alert-show text-center">
+                                                      <div class="col-sm-12">
+                                                      <div class="alert alert-success" role="alert">
+                                                        `+json.alert+`
+                                                      </div>
+                                                      </div>
+                                                    </div>`);
+              $('.form-group').removeClass('.has-error')
+                              .removeClass('.has-success');
+                $('.alert-show').delay(5000).show(10, function(){
+                  $('.alert-show').fadeOut(10000, function(){
+                    $('.alert-show').remove();
+                  });
+                })
+
+            }else {
+              $("#submit").prop('disabled',false)
+                          .html('Reset Password');
+              $.each(json.alert, function(key, value) {
+                var element = $('#' + key);
+                $(element)
+                .closest('.form-group')
+                .find('.text-danger').remove();
+                $(element).after(value);
+              });
+            }
+          }
+    });
+  });
+
+
+
+  </script>
+</body>
+
+
+<!-- Mirrored from www.urbanui.com/justdo/template/demo/vertical-default-light/pages/samples/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2019 23:08:25 GMT -->
+</html>
