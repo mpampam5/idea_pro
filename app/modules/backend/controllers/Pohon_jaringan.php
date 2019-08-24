@@ -79,25 +79,25 @@ class Pohon_jaringan extends MY_Controller{
 
 
     $this->form_validation->set_rules("id_parent","id_parent","trim|xss_clean|required");
-    $this->form_validation->set_rules("posisi","posisi","trim|xss_clean|required");
-    $this->form_validation->set_rules("nama","Nama","trim|xss_clean|required");
-    $this->form_validation->set_rules("email","Email","trim|xss_clean|valid_email");
+    $this->form_validation->set_rules("posisi","posisi","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("nama","Nama","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("email","Email","trim|xss_clean|htmlspecialchars|valid_email");
     $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|numeric");
 
-    $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|required");
-    $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|required");
-    $this->form_validation->set_rules("jk","Jenis Kelamin","trim|xss_clean|required");
-    $this->form_validation->set_rules("provinsi","Provinsi","trim|xss_clean|required");
-    $this->form_validation->set_rules("kabupaten","Kabupaten/Kota","trim|xss_clean|required");
-    $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|required");
-    $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|required");
-    $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
-    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required|callback__cek_pin");
-    $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
+    $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("jk","Jenis Kelamin","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("provinsi","Provinsi","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kabupaten","Kabupaten/Kota","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required|htmlspecialchars|callback__cek_pin");
+    $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|htmlspecialchars|required");
     $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
-    $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
-    $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean");
-    $this->form_validation->set_rules("username","Username","trim|xss_clean|required|alpha_dash|is_unique[tb_auth.username]",[
+    $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("username","Username","trim|xss_clean|required|htmlspecialchars|alpha_dash|is_unique[tb_auth.username]",[
       "is_unique" => "Coba Username yang lain"
     ]);
     $this->form_validation->set_rules("password","Password","trim|xss_clean|required|min_length[5]");
