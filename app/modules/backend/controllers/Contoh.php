@@ -284,7 +284,7 @@ function pairing($id)
 		      	  $config['smtp_port']= "465";
 		      	  $config['smtp_timeout']= "400";
 		      	  $config['smtp_user']= "info@mpampam.com"; // isi dengan email kamu
-		      	  $config['smtp_pass']= "@@111111qwerty"; // isi dengan password kamu
+		      	  $config['smtp_pass']= "xxxxxxxxxxxxxxxxx"; // isi dengan password kamu
 		      	  $config['crlf']="\r\n";
 		      	  $config['newline']="\r\n";
 		      	  $config['wordwrap'] = TRUE;
