@@ -86,23 +86,23 @@ class Profile extends MY_Controller{
         //                   'nik_lama'  =>$nik_lama
         //                 );
 
-        $this->form_validation->set_rules("nik","Nik/No.KTP","trim|xss_clean|required|min_length[16]|max_length[16]|numeric|callback__cek_nik[".$nik_lama."]");
-        $this->form_validation->set_rules("nama","Nama","trim|xss_clean|required");
-        $this->form_validation->set_rules("email","Email","trim|xss_clean|required|valid_email");
-        $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|required|numeric");
-        $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|required");
-        $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|required");
-        $this->form_validation->set_rules("jk","Jenis Kelamin","trim|xss_clean|required");
-        $this->form_validation->set_rules("provinsi","Provinsi","trim|xss_clean|required");
-        $this->form_validation->set_rules("kabupaten","Kabupaten/Kota","trim|xss_clean|required");
-        $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|required");
-        $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|required");
-        $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
-        // $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
-        $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
-        $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
-        $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
-        $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean|required");
+        $this->form_validation->set_rules("nik","Nik/No.KTP","trim|xss_clean|htmlspecialchars|required|min_length[16]|max_length[16]|numeric|callback__cek_nik[".$nik_lama."]");
+        $this->form_validation->set_rules("nama","Nama","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("email","Email","trim|xss_clean|htmlspecialchars|required|valid_email");
+        $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|htmlspecialchars|required|numeric");
+        $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("jk","Jenis Kelamin","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("provinsi","Provinsi","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("kabupaten","Kabupaten/Kota","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|htmlspecialchars|required");
+        // $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|htmlspecialchars|required|numeric");
+        $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean|htmlspecialchars|required");
 
         $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
         if ($this->form_validation->run()) {
