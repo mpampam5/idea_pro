@@ -37,7 +37,7 @@ class Login extends CI_Controller{
 
 
         if ($this->form_validation->run()) {
-          $json["success"] = true;
+            $json["success"] = true;
             $username = $this->input->post("username",true);
             $password = $this->input->post("password");
 

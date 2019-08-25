@@ -73,7 +73,7 @@
 
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <input type="text"  class="form-control form-control-sm" id="username" name="username" placeholder="Masukkan username Anda">
+                      <input type="text"  class="form-control form-control-sm" id="username" name="username" placeholder="Masukkan username/Email Anda">
                     </div>
                   </div>
 
@@ -145,25 +145,39 @@
           processData     :false,
           success:function(json){
             if (json.success==true) {
-              $("#form")[0].reset();
-              $("#form").find('.text-danger').remove();
-              $("html, body").animate({ scrollTop: 0 }, "slow");
-              $("#submit").prop('disabled',true)
-                          .html('Registrasi');
-              $('#alert').hide().fadeIn(1000).html(`<div class="row alert-show text-center">
-                                                      <div class="col-sm-12">
-                                                      <div class="alert alert-success" role="alert">
-                                                        `+json.alert+`
-                                                      </div>
-                                                      </div>
-                                                    </div>`);
-              $('.form-group').removeClass('.has-error')
-                              .removeClass('.has-success');
-                $('.alert-show').delay(5000).show(10, function(){
-                  $('.alert-show').fadeOut(10000, function(){
-                    $('.alert-show').remove();
+              if (json.valid==true) {
+                $("#form")[0].reset();
+                $("#form").find('.text-danger').remove();
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                $("#submit").prop('disabled',false)
+                            .html('Reset Password');
+                $('#alert').hide().fadeIn(1000).html(`<div class="row alert-show text-center">
+                                                        <div class="col-sm-12">
+                                                        <div class="alert alert-success" role="alert">
+                                                          `+json.alert+`
+                                                        </div>
+                                                        </div>
+                                                      </div>`);
+                $('.form-group').removeClass('.has-error')
+                                .removeClass('.has-success');
+                  $('.alert-show').delay(5000).show(10, function(){
+                    $('.alert-show').fadeOut(10000, function(){
+                      $('.alert-show').remove();
+                    });
+                  })
+              }else {
+                  $("#username").val('');
+                  $('#submit').prop('disabled', false).html('Reset Password');
+                  $.toast({
+                    // heading: 'Gagal Login',
+                    text: json.alert,
+                    showHideTransition: 'slide',
+                    icon: 'error',
+                    loaderBg: '#3e3e3e',
+                    position: 'top-center'
                   });
-                })
+                  $('.text-danger').remove();
+              }
 
             }else {
               $("#submit").prop('disabled',false)
