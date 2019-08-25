@@ -35,7 +35,7 @@
               <h6 class="font-weight-light">Silahkan masukkan data akun.</h6>
               <form class="pt-3" id="form" action="<?=site_url("member-panel/action")?>">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="Username">
+                  <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="Username/Email">
                 </div>
                 <div class="form-group">
                   <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="Password">
@@ -99,11 +99,11 @@
                                           $("#password").val('');
                                           $('#submit').prop('disabled', false).text('Login');
                                           $.toast({
-                                            heading: 'Gagal Login',
+                                            // heading: 'Gagal Login',
                                             text: json.alert,
                                             showHideTransition: 'slide',
                                             icon: 'error',
-                                            loaderBg: '#000000',
+                                            loaderBg: '#3e3e3e',
                                             position: 'top-center'
                                           });
                                           $('.text-danger').remove();

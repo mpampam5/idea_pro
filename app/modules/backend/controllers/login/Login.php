@@ -38,25 +38,26 @@ class Login extends CI_Controller{
 
         if ($this->form_validation->run()) {
           $json["success"] = true;
-            $username = $this->input->post("username");
+            $username = $this->input->post("username",true);
             $password = $this->input->post("password");
 
+            $str_raplace_username = str_replace('\'',',..,.',$username);
+            $where = array("level" => "member",
+                            "is_active" => '1',
+                            "is_verifikasi" => '1');
             $qry = $this->db->select("tb_auth.id_personal,
                                       tb_auth.username,
                                       tb_auth.`password`,
                                       tb_auth.`level`,
                                       tb_auth.token,
+                                      tb_member.email,
                                       tb_member.kode_referral,
                                       tb_member.is_active,
                                       tb_member.is_verifikasi")
                             ->from("tb_auth")
                             ->join("tb_member","tb_member.id_member = tb_auth.id_personal")
-                            ->where([
-                                      "username" => $username,
-                                      "level" => "member",
-                                      "is_active" => '1',
-                                      "is_verifikasi" => '1'
-                                    ])
+                            ->where("(username = '$str_raplace_username' OR email='$str_raplace_username')")
+                            ->where($where)
                             ->get();
             if ($qry->num_rows() > 0) {
 
@@ -71,10 +72,10 @@ class Login extends CI_Controller{
                   $json['valid'] = true;
                   $json['url'] = site_url("backend/home");
                 }else {
-                  $json["alert"] = "Username Atau Password Salah.";
+                  $json["alert"] = "Data yang anda masukkan tidak valid. Coba lagi!";
                 }
             }else {
-                $json["alert"] = "Username Atau Password Salah.";
+                $json["alert"] = "Data yang anda masukkan tidak valid. Coba lagi!";
             }
 
         }else {
