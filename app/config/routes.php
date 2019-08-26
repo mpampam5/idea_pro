@@ -71,7 +71,11 @@ $route['member-reset-password'] = 'backend/reset_password/reset_password';
 $route['member-reset-password/act'] = 'backend/reset_password/reset_password/action';
 
 
+$route['new-password'] = 'backend/reset_password/reset_password/reset';
 $route['new-password/(:any)'] = 'backend/reset_password/reset_password/reset/$1';
+
+$route['reset-act'] = 'backend/reset_password/reset_password/reset_action';
+$route['reset-act/(:any)'] = 'backend/reset_password/reset_password/reset_action/$1';
 
 $route['member-register/jsonkabupaten'] = 'backend/register/register/kabupaten';
 $route['member-register/jsonkecamatan'] = 'backend/register/register/kecamatan';

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from www.urbanui.com/justdo/template/demo/vertical-default-light/pages/samples/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2019 23:08:25 GMT -->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -21,32 +19,6 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="<?=base_url()?>_template/back/images/favicon.png" />
 
-  <style media="screen">
-  .datepicker table{
-    width: 100%;
-  }
-
-  .auth .auth-form-light select{
-    color: #2b2b2b;
-  }
-
-  .title-form{
-    color: #179be6;
-    margin-bottom: 1.2rem;
-    text-transform: capitalize;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  input:-moz-read-only { /* For Firefox */
-    background-color: #dfdfdf!important;
-  }
-
-  input:read-only {
-    background-color: #dfdfdf!important;
-  }
-
-  </style>
 </head>
 
 <body>
@@ -57,7 +29,7 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="text-center mb-3">
-                <h3>Reset Password</h3>
+                <h3>Lupa Password?</h3>
               </div>
               <!-- <div class="brand-logo">
                 <img src="http://www.urbanui.com/justdo/template/images/logo.svg" alt="logo">
@@ -118,18 +90,6 @@
 
   <script type="text/javascript">
 
-  $(document).ready(function(){
-      $('#robot').click(function(){
-        $(this).is(':checked') ? $('#submit').prop('disabled', false) : $('#submit').prop('disabled',true);
-
-      });
-
-      $('#tgl_lahir').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-      });
-  });
-
 
   $("#form").submit(function(e){
     e.preventDefault();
@@ -171,6 +131,7 @@
                   $.toast({
                     // heading: 'Gagal Login',
                     text: json.alert,
+                    timeOut: 5000,
                     showHideTransition: 'slide',
                     icon: 'error',
                     loaderBg: '#3e3e3e',
@@ -199,6 +160,4 @@
   </script>
 </body>
 
-
-<!-- Mirrored from www.urbanui.com/justdo/template/demo/vertical-default-light/pages/samples/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2019 23:08:25 GMT -->
 </html>
