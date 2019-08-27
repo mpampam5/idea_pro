@@ -61,4 +61,13 @@ class Member_model extends MY_Model{
   }
 
 
+  function paket($id_paket)
+  {
+    $query = $this->db->where('pin >',paket($id_paket,'pin'))
+                      ->order_by('pin','ASC')
+                      ->get('config_paket');
+    return $query;
+  }
+
+
 }

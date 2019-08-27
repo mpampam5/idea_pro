@@ -62,8 +62,7 @@ class Upgrade_paket extends MY_Controller{
           $update_paket = array("paket" => $paket);
           $this->db->update("tb_member",$update_paket,["id_member" => sess('id_member')]);
 
-
-
+          //bonus pairing
           $is_parent = $this->btree->cek_is_parent(sess('id_member'));
 
           foreach ($is_parent as $value) {

@@ -11,12 +11,14 @@
     <div class="card">
       <div class="card-body">
         <div class="col-lg-12">
-            <div class="border-bottom text-center pb-4">
+            <div class="border-bottom text-center pb-2">
             <img src="<?=base_url()?>_template/back/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3">
             <div class="mb-3">
-              <h3><?=$row->nama?></h3>
+              <h5 style="text-transform:uppercase;"><?=$row->nama?></h5>
               <p class="w-75 mx-auto mb-3">
-                Mulai Bergabung  <?=date('d/m/Y',strtotime($row->created))?>
+                <span>Mulai Bergabung  <?=date('d/m/Y',strtotime($row->created))?></span><br>
+                <span class="mt-2 badge badge-pill badge-danger" style="text-transform:uppercase;"><?=$row->status_stockis?></span>
+                <span class="mt-2 badge badge-pill badge-success"> <?=paket($row->paket,'paket')?></span>
               </p>
             </div>
 
@@ -36,7 +38,7 @@
                 <div class="col-md-3 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body">
-                      <p class="card-title text-md-center text-xl-left">Total Referral</p>
+                      <p class="card-title text-md-center text-xl-left">Referral</p>
                       <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
                         <h4 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$referral?></h4>
                         <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
@@ -71,6 +73,14 @@
               </div>
             </div>
           </div>
+
+
+          <div class="col-lg-12 mt-3 text-center">
+              <a href="<?=site_url("adm-backend/member/upgrade_paket/$row->id_member")?>" id="upgrade_paket" class="btn btn-primary btn-sm m-t-10"> Upgrade Paket</a>
+              <a href="<?=site_url("adm-backend/member/status_stockis/$row->id_member")?>" id="status_stockis" class="btn btn-primary btn-sm m-t-10"> Upgrade Status Stockis</a>
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -323,7 +333,7 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Mira Bank</label>
+            <label class="col-sm-3 col-form-label">Mitra Bank</label>
             <div class="col-sm-9">
               <select name="bank" id="bank" style="color:#495057" class="form-control">
                 <?php foreach ($bank as $banks): ?>
@@ -354,27 +364,6 @@
             </div>
           </div>
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Paket</label>
-            <div class="col-sm-9">
-              <select class="form-control" name="paket" id="paket" style="color:#495057">
-                <?php $qry_paket =$this->db->get('config_paket'); ?>
-                <?php foreach ($qry_paket->result() as $qry_paket): ?>
-                  <option <?=($row->paket==$qry_paket->id_paket)?"selected":""?> value="<?=$qry_paket->id_paket?>"><?=$qry_paket->paket?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Status Stockis</label>
-            <div class="col-sm-9">
-              <select class="form-control" name="status_stockis" id="status_stockis" style="color:#495057">
-                <option <?=($row->status_stockis=="member")?"selected":""?> value="member">Member</option>
-                <option <?=($row->status_stockis=="master_stockis")?"selected":""?> value="master_stockis">Master Stockis</option>
-              </select>
-            </div>
-          </div>
 
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Status Aktif</label>
@@ -556,4 +545,29 @@ $(document).ready(function(){
             }
 
 
+</script>
+
+
+
+<script type="text/javascript">
+  $(document).on("click","#upgrade_paket",function(e){
+    e.preventDefault();
+    $('.modal-dialog').removeClass('modal-lg')
+                      .removeClass('modal-sm')
+                      .addClass('modal-md');
+    $("#modalTitle").text('Upgrade Paket');
+    $('#modalContent').load($(this).attr('href'));
+    $("#modalGue").modal('show');
+  });
+
+
+  $(document).on("click","#status_stockis",function(e){
+    e.preventDefault();
+    $('.modal-dialog').removeClass('modal-lg')
+                      .removeClass('modal-sm')
+                      .addClass('modal-md');
+    $("#modalTitle").text('Upgrade Paket');
+    $('#modalContent').load($(this).attr('href'));
+    $("#modalGue").modal('show');
+  });
 </script>

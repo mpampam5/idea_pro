@@ -52,7 +52,7 @@ class Member extends MY_Controller{
                 "row"         => $row,
                 "is_active"   => $row->is_active,
                 "provinsi"    => $this->db->get("wil_provinsi")->result(),
-                "bank"        => $this->db->get("ref_bank")->result()
+                "bank"        => $this->db->get("ref_bank")->result(),
               ];
       $this->template->view("content/member/detail",$data);
     }else {
@@ -78,8 +78,6 @@ class Member extends MY_Controller{
         $kelurahan          = $this->input->post("kelurahan",true);
         $alamat             = $this->input->post("alamat",true);
         $is_active          = $this->input->post("is_active",true);
-        $paket              = $this->input->post("paket",true);
-        $status_stockis = $this->input->post("status_stockis",true);
         $bank               = $this->input->post("bank",true);
         $no_rek             = $this->input->post("no_rek",true);
         $nama_rekening      = $this->input->post("nama_rekening",true);
@@ -103,8 +101,6 @@ class Member extends MY_Controller{
         $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|required");
         $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
         $this->form_validation->set_rules("is_active","Status","trim|xss_clean|required");
-        $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
-        $this->form_validation->set_rules("status_stockis","Master Stockis","trim|xss_clean|required");
         $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
         $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
         $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
@@ -127,8 +123,6 @@ class Member extends MY_Controller{
                     "kelurahan"     => $kelurahan,
                     "alamat"        => $alamat,
                     "is_active"     => $is_active,
-                    "paket"         => $paket,
-                    "status_stockis"=> $status_stockis,
                     "created"       => date("Y-m-d h:i:s")
                     ];
           $this->model->get_update("tb_member",$data,["id_member"=>$id_member]);
@@ -180,6 +174,105 @@ class Member extends MY_Controller{
         }
 
         echo json_encode($json);
+    }
+  }
+
+
+
+  function upgrade_paket($id)
+  {
+    if ($row = $this->model->get_where_detail(["tb_member.id_member"=>$id])) {
+      $this->template->set_title("Upgrade Paket");
+
+      $data = [
+                "action" => site_url("adm-backend/member/upgrade_paket_act/$id"),
+                "row" => $row ,
+                "paket" => $this->model->paket($row->paket)
+              ];
+      $this->template->view("content/member/upgrade_paket",$data,false);
+    }else {
+      echo "<p class='text-center'>Error404. Page Not Found.</p>";
+    }
+  }
+
+
+  function upgrade_paket_act($id)
+  {
+    if ($this->input->is_ajax_request()) {
+
+
+
+      $this->form_validation->set_rules("paket","Paket","trim|xss_clean|required|numeric",[
+        "numeric"=> "data tidak valid"
+      ]);
+      $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
+      if ($this->form_validation->run()) {
+
+        $paket = $this->input->post('paket',true);
+        $pakets = paket($paket,'pin')-paket(profile_member($id,'paket'),'pin');
+
+        $update_paket = array("paket" => $paket);
+        $this->db->update("tb_member",$update_paket,["id_member" => $id]);
+
+        $this->load->library(array("btree"));
+        //Bonus Pairing
+        $is_parent = $this->btree->cek_is_parent($id);
+
+        foreach ($is_parent as $value) {
+           $this->btree->pairing_upgrade_paket($value,$id,$pakets);
+        }
+
+        $json['alert'] = "Paket berhasil di upgrade";
+        $json['success'] =  true;
+      }else {
+        foreach ($_POST as $key => $value)
+          {
+            $json['alert'][$key] = form_error($key);
+          }
+      }
+      echo json_encode($json);
+    }
+  }
+
+
+  function status_stockis($id)
+  {
+    if ($row = $this->model->get_where_detail(["tb_member.id_member"=>$id])) {
+      $this->template->set_title("Upgrade Paket");
+
+      $data = [
+                "action" => site_url("adm-backend/member/status_stockis_act/$id"),
+                "row" => $row
+              ];
+      $this->template->view("content/member/status_stockis",$data,false);
+    }else {
+      echo "<p class='text-center'>Error404. Page Not Found.</p>";
+    }
+  }
+
+
+  function status_stockis_act($id)
+  {
+    if ($this->input->is_ajax_request()) {
+
+      $this->form_validation->set_rules("status_stockis","Status Stockis","trim|xss_clean|required");
+      $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
+      if ($this->form_validation->run()) {
+
+        $paket = $this->input->post('paket',true);
+        $status_stockis = $this->input->post("status_stockis",true);
+        $update_paket = array("status_stockis" => $status_stockis);
+        $this->db->update("tb_member",$update_paket,["id_member" => $id]);
+
+        $json['alert'] = "Status Stockis Berhasil Diubah.";
+        $json['success'] =  true;
+      }else {
+        foreach ($_POST as $key => $value)
+          {
+            $json['alert'][$key] = form_error($key);
+          }
+      }
+      echo json_encode($json);
     }
   }
 
