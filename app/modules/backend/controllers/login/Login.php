@@ -41,7 +41,7 @@ class Login extends CI_Controller{
             $username = $this->input->post("username",true);
             $password = $this->input->post("password");
 
-            $str_raplace_username = str_replace('\'',',..,.',$username);
+            $str_raplace_username = str_replace('\'','mpampamdotcom',$username);
             $where = array("level" => "member",
                             "is_active" => '1',
                             "is_verifikasi" => '1');
