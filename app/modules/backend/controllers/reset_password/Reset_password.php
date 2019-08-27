@@ -36,7 +36,7 @@ class Reset_password extends CI_Controller{
                                     tb_auth.username,
                                     tb_auth.password,
                                     tb_auth.level,
-                                    tb_auth.token,
+                                    tb_auth.token_actived,
                                     tb_member.nama,
                                     tb_member.email,
                                     tb_member.is_active,
@@ -49,16 +49,25 @@ class Reset_password extends CI_Controller{
 
           if ($qry->num_rows() > 0) {
 
-
-
-
             $row = $qry->row();
-            if ($this->_send_mail($row->nama,$row->email,$row->token)==1) {
+            if ($this->_send_mail($row->nama,$row->email,$row->token_actived)==1) {
               $json['alert'] = "Data Berhasil Dikirim Ke Email Anda.";
               $json['valid'] = true;
             }else {
               $json['alert'] = "Gagal Mengirim Email. Silahkan Hubungi admin.";
             }
+
+            // $date = md5(date('dmyHis'));
+            // $username = sha1(md5($row->username));
+            // $tokens = "RST-".sha1($username."".$date)."".date('dmyhis');
+            //
+            // $where_member = array("id_personal"=>$row->id_personal,
+            //                       "level" => "member");
+            // $update = array('token_actived' => $tokens );
+            //
+            // $this->db->where($where_member)
+            //         ->update("tb_auth",$update);
+
 
 
           }else {
@@ -76,14 +85,25 @@ class Reset_password extends CI_Controller{
 
 
 
+function reset($tokens="")
+{
+  if ($tokens!="") {
+    echo "reset password";
+  }else {
+    redirect(site_url("member-panel"),'refresh');
+  }
+}
+
+
+
 
 
 function _send_mail($name,$email,$token)
 {
 
-
+  $link = site_url("new-password/$token");
   $subject  = "Mpampam dot Com | Reset Password";
-  $template = $this->load->view('register/email_template',array("nama"=>$name,"token"=>$token),TRUE);
+  $template = $this->load->view('reset_password/email_template',array("nama"=>$name,"link"=>$link),TRUE);
 
   $this->load->library('email');
   $config = array();
@@ -91,11 +111,11 @@ function _send_mail($name,$email,$token)
   $config['useragent']    = 'Codeigniter';
   $config['protocol']     = "smtp";
   $config['mailtype']     = "html";
-  $config['smtp_host']    = "ssl://mail.mpampam.com";//pengaturan smtp
-  $config['smtp_port']    = "465";
+  $config['smtp_host']    = $this->config->item("smtp_host");//pengaturan smtp
+  $config['smtp_port']    = $this->config->item("smtp_port");
   $config['smtp_timeout'] = "400";
-  $config['smtp_user']    = "info@mpampam.com"; // isi dengan email kamu
-  $config['smtp_pass']    = "zzzzzzzzzzzz"; // isi dengan password kamu
+  $config['smtp_user']    = $this->config->item("email"); // isi dengan email kamu
+  $config['smtp_pass']    = $this->config->item("password"); // isi dengan password kamu
   $config['crlf']         ="\r\n";
   $config['newline']      ="\r\n";
   $config['wordwrap']     = TRUE;
