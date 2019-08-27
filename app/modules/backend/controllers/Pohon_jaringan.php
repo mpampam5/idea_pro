@@ -81,8 +81,8 @@ class Pohon_jaringan extends MY_Controller{
     $this->form_validation->set_rules("id_parent","id_parent","trim|xss_clean|required");
     $this->form_validation->set_rules("posisi","posisi","trim|xss_clean|htmlspecialchars|required");
     $this->form_validation->set_rules("nama","Nama","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("email","Email","trim|xss_clean|htmlspecialchars|valid_email");
-    $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|numeric");
+    $this->form_validation->set_rules("email","Email","trim|xss_clean|htmlspecialchars|required|valid_email");
+    $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|numeric|required");
 
     $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|htmlspecialchars|required");
     $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|htmlspecialchars|required");
@@ -242,7 +242,7 @@ class Pohon_jaringan extends MY_Controller{
           $is_parent = $this->btree->cek_is_parent($last_id_member);
 
           foreach ($is_parent as $value) {
-             $this->_pairing($value,$last_id_member);
+             $this->btree->pairing($value,$last_id_member);
           }
 
 
@@ -480,7 +480,7 @@ function kabupaten(){
         $is_parent = $this->btree->cek_is_parent($id_member_verif);
 
         foreach ($is_parent as $value) {
-           $this->_pairing($value,$id_member_verif);
+           $this->btree->pairing($value,$id_member_verif);
         }
 
 
@@ -498,108 +498,108 @@ function kabupaten(){
 
 
 
-function add_pairing($id_parent)
-{
-  //INSERT BONUS PAIRING
-    // $id_parent = $this->input->post('id');
-    $is_parent = $this->btree->cek_is_parent($id_parent);
-
-    foreach ($is_parent as $value) {
-       $this->_pairing($value);
-    }
-
-}
+// function add_pairing($id_parent)
+// {
+//   //INSERT BONUS PAIRING
+//     // $id_parent = $this->input->post('id');
+//     $is_parent = $this->btree->cek_is_parent($id_parent);
+//
+//     foreach ($is_parent as $value) {
+//        $this->_pairing($value);
+//     }
+//
+// }
 
 
 
 
 //BONUS PAIRING
-  function _pairing($id,$last_id_member)
-  {
-
-      $pin_left = [];
-      $pin_right = [];
-
-
-      $left = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_left_id_children($id))), 0);
-      foreach ($left as $id_left) {
-        $pin_left[ ]= paket(profile_member($id_left,'paket'),'pin');
-      }
-
-      $right = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_right_id_children($id))), 0);
-      foreach ($right as $id_right) {
-        $pin_right[]= paket(profile_member($id_right,'paket'),'pin');
-      }
-
-      if (in_array($last_id_member,$left)) {
-        $posisi = 'kiri';
-      }elseif (in_array($last_id_member,$right)) {
-        $posisi = 'kanan';
-      }else {
-        $posisi = '';
-      }
-
-
-      $cek_pairing = $this->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa,posisi")
-                              ->from('bonus_pairing')
-                              ->where('id_member',$id)
-                              ->order_by('created','desc')
-                              ->limit(1)
-                              ->get();
-
-      if ($cek_pairing->num_rows()==1) {
-        $cek_sisa = $cek_pairing->row()->sisa;
-        $cek_posisi_pairing = $cek_pairing->row()->posisi;
-      }else {
-        $cek_sisa = 0;
-        $cek_posisi_pairing = "";
-      }
-
-
-      $total_l = array_sum($pin_left) * config_all('harga_pin');
-      $total_r = array_sum($pin_right) * config_all('harga_pin');
-
-      $total_pin_baru = paket(profile_member($last_id_member,'paket'),'pin') * config_all('harga_pin');
-
-      if ($cek_posisi_pairing == $posisi) {
-          $jml = $cek_sisa + $total_pin_baru;
-          $total_bonus = 0;
-      }else {
-
-
-
-
-          $jml = abs($cek_sisa-$total_pin_baru);
-          if ($cek_sisa > 0) {
-            if ($cek_sisa < $total_pin_baru) {
-                $hitungan = $cek_sisa;
-            }elseif($cek_sisa > $total_pin_baru){
-                $hitungan = $total_pin_baru;
-            }else {
-                $hitungan = $cek_sisa;
-            }
-          }else {
-            $hitungan = 0;
-          }
-
-          $total_bonus = (config_all('komisi_pairing')/100) * $hitungan;
-      }
-
-      if ($total_l > $total_r) {
-          $posisi_baru = 'kiri';
-      }elseif($total_l < $total_r){
-          $posisi_baru = 'kanan';
-      }else{
-          $posisi_baru = '';
-      }
-
-
-      $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$jml,"posisi"=>$posisi_baru,"created"=>date("Y-m-d h:i:s"));
-      $this->model->get_insert('bonus_pairing', $insert);
-
-
-    return;
-  }
+  // function _pairing($id,$last_id_member)
+  // {
+  //
+  //     $pin_left = [];
+  //     $pin_right = [];
+  //
+  //
+  //     $left = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_left_id_children($id))), 0);
+  //     foreach ($left as $id_left) {
+  //       $pin_left[ ]= paket(profile_member($id_left,'paket'),'pin');
+  //     }
+  //
+  //     $right = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_right_id_children($id))), 0);
+  //     foreach ($right as $id_right) {
+  //       $pin_right[]= paket(profile_member($id_right,'paket'),'pin');
+  //     }
+  //
+  //     if (in_array($last_id_member,$left)) {
+  //       $posisi = 'kiri';
+  //     }elseif (in_array($last_id_member,$right)) {
+  //       $posisi = 'kanan';
+  //     }else {
+  //       $posisi = '';
+  //     }
+  //
+  //
+  //     $cek_pairing = $this->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa,posisi")
+  //                             ->from('bonus_pairing')
+  //                             ->where('id_member',$id)
+  //                             ->order_by('created','desc')
+  //                             ->limit(1)
+  //                             ->get();
+  //
+  //     if ($cek_pairing->num_rows()==1) {
+  //       $cek_sisa = $cek_pairing->row()->sisa;
+  //       $cek_posisi_pairing = $cek_pairing->row()->posisi;
+  //     }else {
+  //       $cek_sisa = 0;
+  //       $cek_posisi_pairing = "";
+  //     }
+  //
+  //
+  //     $total_l = array_sum($pin_left) * config_all('harga_pin');
+  //     $total_r = array_sum($pin_right) * config_all('harga_pin');
+  //
+  //     $total_pin_baru = paket(profile_member($last_id_member,'paket'),'pin') * config_all('harga_pin');
+  //
+  //     if ($cek_posisi_pairing == $posisi) {
+  //         $jml = $cek_sisa + $total_pin_baru;
+  //         $total_bonus = 0;
+  //     }else {
+  //
+  //
+  //
+  //
+  //         $jml = abs($cek_sisa-$total_pin_baru);
+  //         if ($cek_sisa > 0) {
+  //           if ($cek_sisa < $total_pin_baru) {
+  //               $hitungan = $cek_sisa;
+  //           }elseif($cek_sisa > $total_pin_baru){
+  //               $hitungan = $total_pin_baru;
+  //           }else {
+  //               $hitungan = $cek_sisa;
+  //           }
+  //         }else {
+  //           $hitungan = 0;
+  //         }
+  //
+  //         $total_bonus = (config_all('komisi_pairing')/100) * $hitungan;
+  //     }
+  //
+  //     if ($total_l > $total_r) {
+  //         $posisi_baru = 'kiri';
+  //     }elseif($total_l < $total_r){
+  //         $posisi_baru = 'kanan';
+  //     }else{
+  //         $posisi_baru = '';
+  //     }
+  //
+  //
+  //     $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$jml,"posisi"=>$posisi_baru,"created"=>date("Y-m-d h:i:s"));
+  //     $this->model->get_insert('bonus_pairing', $insert);
+  //
+  //
+  //   return;
+  // }
 
 
 

@@ -25,6 +25,7 @@ class Upgrade_paket extends MY_Controller{
   function action($serial_pin)
   {
     if ($this->input->is_ajax_request()) {
+      $this->load->library(array("btree"));
       $json = array('success'=>false, 'alert'=>array());
       $this->load->library(array("form_validation"));
       $this->form_validation->set_rules('paket', 'Paket', 'xss_clean|required|numeric|callback__cek_pin');
@@ -60,6 +61,15 @@ class Upgrade_paket extends MY_Controller{
 
           $update_paket = array("paket" => $paket);
           $this->db->update("tb_member",$update_paket,["id_member" => sess('id_member')]);
+
+
+
+          $is_parent = $this->btree->cek_is_parent(sess('id_member'));
+
+          foreach ($is_parent as $value) {
+             $this->btree->pairing_upgrade_paket($value,sess('id_member'),$pakets);
+          }
+
 
           $json['alert'] = "Berhasil mengupgrade Paket";
           $json['success'] = true;
