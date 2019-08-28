@@ -54,6 +54,7 @@ function profile($field)
                     ->join("tb_auth","tb_auth.id_personal = tb_member.id_member")
                     ->join("ref_bank","ref_bank.id = trans_member_rek.id_bank")
                     ->where('tb_member.id_member', $ci->session->userdata('id_member'))
+                    ->where('tb_auth.level', "member")
                     ->get()
                     ->row();
   return $query->$field;
@@ -130,6 +131,7 @@ function profile_member_where($where,$field)
                       ->join("trans_member_rek","trans_member_rek.id_member = tb_member.id_member")
                       ->join("tb_auth","tb_auth.id_personal = tb_member.id_member")
                       ->join("ref_bank","ref_bank.id = trans_member_rek.id_bank")
+                      ->where('tb_auth.level', "member")
                       ->where($where)
                       ->get()
                       ->row();

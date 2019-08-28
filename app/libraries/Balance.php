@@ -25,9 +25,9 @@ function sponsor($id_member)
 {
   $ci =& get_instance();
   $query =  $ci->db->select("bonus_sponsor.id_bonus_sponsor,
-                                      bonus_sponsor.id_parent,
-                                      bonus_sponsor.id_member,
-                                      SUM(bonus_sponsor.total_bonus) AS total_bonus")
+                             bonus_sponsor.id_parent,
+                             bonus_sponsor.id_member,
+                             SUM(bonus_sponsor.total_bonus) AS total_bonus")
                   ->from('bonus_sponsor')
                   ->where('bonus_sponsor.id_parent',$id_member)
                   ->get();
