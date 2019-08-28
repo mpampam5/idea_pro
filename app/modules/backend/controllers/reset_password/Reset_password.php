@@ -134,7 +134,7 @@ function reset_action($token="")
             $this->load->helper("pass_hash");
             $date = md5(date('dmYHis'));
             $username = sha1(md5($row->username));
-            $tokens = "RST-".sha1($username.date('dmyhis').$date);
+            $tokens = "RST-".date('dmyhis').sha1($username.$date);
 
             $password = $this->input->post('konfirmasi_password');
 
@@ -176,31 +176,29 @@ function reset_action($token="")
 
 function _send_mail($name,$email,$token)
 {
-
-
   $this->load->config('my_config');
   $link = site_url("new-password/$token");
-  $subject  = "Mpampam dot Com | Reset Password";
+  $subject  = "Reset Password";
   $template = $this->load->view('reset_password/email_template',array("nama"=>$name,"link"=>$link),TRUE);
 
-  $this->load->library('email');
-  $config = array();
+  // $this->load->library('email');
+  // $config = array();
   $config['charset']      = 'utf-8';
-  $config['useragent']    = 'Codeigniter';
+  // $config['useragent']    = 'Codeigniter';
   $config['protocol']     = "smtp";
   $config['mailtype']     = "html";
   $config['smtp_host']    = $this->config->item("smtp_host");//pengaturan smtp
   $config['smtp_port']    = $this->config->item("smtp_port");
-  $config['smtp_timeout'] = "400";
   $config['smtp_user']    = $this->config->item("email"); // isi dengan email kamu
   $config['smtp_pass']    = $this->config->item("password"); // isi dengan password kamu
   $config['crlf']         ="\r\n";
   $config['newline']      ="\r\n";
-  $config['wordwrap']     = TRUE;
+  // $config['wordwrap']     = FALSE;
   //memanggil library email dan set konfigurasi untuk pengiriman email
-  $this->email->initialize($config);
+  // $this->email->initialize($config);
+  $this->load->library('email',$config);
   //konfigurasi pengiriman
-  $this->email->from($config['smtp_user']);
+  $this->email->from($config['smtp_user'],"Binary-tree");
   $this->email->to($email);
   $this->email->subject($subject);
   $this->email->message($template);
