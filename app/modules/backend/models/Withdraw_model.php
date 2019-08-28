@@ -8,6 +8,7 @@ class Withdraw_model extends MY_Model{
   function json_withdraw_all()
   {
     $this->datatables->select(" trans_member_withdraw.id_withdraw,
+                                trans_member_withdraw.kode_transaksi,
                                 DATE_FORMAT(trans_member_withdraw.created,'%d/%m/%Y %h:%i') AS created,
                                 trans_member_withdraw.id_member,
                                 format(trans_member_withdraw.nominal,2) AS nominal,
@@ -24,6 +25,7 @@ class Withdraw_model extends MY_Model{
   function json_withdraw_add()
   {
     $this->datatables->select(" trans_member_withdraw.id_withdraw,
+                                trans_member_withdraw.kode_transaksi,
                                 DATE_FORMAT(trans_member_withdraw.created,'%d/%m/%Y %h:%i') AS created,
                                 trans_member_withdraw.id_member,
                                 format(trans_member_withdraw.nominal,2) AS nominal,

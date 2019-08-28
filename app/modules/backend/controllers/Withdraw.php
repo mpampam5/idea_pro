@@ -63,11 +63,11 @@ class Withdraw extends MY_Controller{
         $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
         if ($this->form_validation->run()) {
           $data = [
-                          "id_member"  => sess('id_member'),
-                          "nominal"    => $this->input->post('nominal',true),
-                          // "keterangan" => $this->input->post("keterangan",true),
-                          "status"    => "pending",
-                          "created"    => date('Y-m-d h:i:s')
+                          "kode_transaksi" => "WD-".date("dmYhis"),
+                          "id_member"      => sess('id_member'),
+                          "nominal"        => $this->input->post('nominal',true),
+                          "status"         => "pending",
+                          "created"        => date('Y-m-d h:i:s')
                     ];
           $this->model->get_insert("trans_member_withdraw",$data);
           $json['alert'] = "Add New Withdraw Berhasil Di Tambahkan. Silahkan Menunggu Prosess Verifikasi Admin";

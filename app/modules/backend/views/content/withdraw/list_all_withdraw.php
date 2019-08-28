@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
@@ -25,17 +22,20 @@
 
         <hr>
 
-            <table id="table" class="table table-bordered">
-              <thead>
-                <tr class="bg-warning text-white">
-                    <th width="10px">No</th>
-                    <th>Waktu WD</th>
-                    <th>Ammount</th>
-                    <th>Status</th>
-                </tr>
-              </thead>
+            <div class="table-responsive">
+              <table id="table" class="table table-bordered">
+                <thead>
+                  <tr class="bg-warning text-white">
+                      <th width="10px">No</th>
+                      <th>Waktu WD</th>
+                      <th>Kode Transaksi</th>
+                      <th>Ammount</th>
+                      <th>Status</th>
+                  </tr>
+                </thead>
 
-            </table>
+              </table>
+            </div>
 
       </div>
     </div>
@@ -66,7 +66,6 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
-          responsive:true,
           ajax: {"url": "<?=base_url()?>backend/withdraw/json_all_withdraw", "type": "POST"},
           columns: [
               {
@@ -75,6 +74,7 @@ $(document).ready(function() {
                 "visible":false
               },
               {"data":"created"},
+              {"data":"kode_transaksi"},
               {
                 "data":"nominal",
                 render:function(data,type,row,meta)

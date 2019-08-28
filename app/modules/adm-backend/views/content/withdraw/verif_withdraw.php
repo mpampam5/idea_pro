@@ -32,6 +32,7 @@
                     <th>Id_member</th>
                     <th>Waktu Withdraw</th>
                     <th>Waktu Verifikasi</th>
+                    <th>Kode Transaksi</th>
                     <th>Member</th>
                     <th>Ammount</th>
                     <th>Status</th>
@@ -81,15 +82,23 @@ $(document).ready(function() {
                 "visible":false
               },
               {"data":"created"},
-              {"data":"time_verif"},
+              {"data":"time_verif","visible":false},
+              {"data":"kode_transaksi"},
               {"data":"nama",
                 render:function(data,type,row,meta)
                 {
-                  return '<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">'+data+'</a>';
+                  var str = ` <p>Waktu Verifikasi : `+row.time_verif+`</p>
+                              <p><i class="fa fa-user"></i> &nbsp;<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">`+data+`</a>&nbsp;|&nbsp;
+                              <span class="text-primary">`+row.username+`</span></p>
+                              <p><i class="fa fa-credit-card"></i> No.Rek : `+row.no_rekening+` (`+row.bank+`)</p>
+                              <p><i class="fa fa-id-card"></i> Nama Rek : `+row.nama_rekening+`</p>
+                              <p><i class="fa fa-money"></i> Ammount : <b class="text-danger">Rp.`+row.nominal+`</b></p>`;
+                  return str;
                 }
               },
               {
                 "data":"nominal",
+                "visible":false,
                 render:function(data,type,row,meta)
                 {
                   return "Rp. "+data;
@@ -101,6 +110,10 @@ $(document).ready(function() {
                     return '<span class="badge badge-success badge-pill text-white"> Terverifikasi</span>';
                 }
               },
+              {"data":"username","visible":false},
+              {"data":"no_rekening","visible":false},
+              {"data":"nama_rekening","visible":false},
+              {"data":"bank","visible":false},
           ],
           order: [[0, 'desc']],
       });

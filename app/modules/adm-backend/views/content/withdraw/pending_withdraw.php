@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
@@ -25,20 +22,23 @@
 
         <hr>
 
-            <table id="table" class="table table-bordered">
-              <thead>
-                <tr class="bg-warning text-white">
-                    <th width="10px">No</th>
-                    <th>Id_member</th>
-                    <th>Waktu Withdraw</th>
-                    <th>Member</th>
-                    <th>Ammount</th>
-                    <th>Status</th>
-                    <th>#</th>
-                </tr>
-              </thead>
+            <div class="table-responsive">
+              <table id="table" class="table table-bordered">
+                <thead>
+                  <tr class="bg-warning text-white">
+                      <th width="10px">No</th>
+                      <th>Id_member</th>
+                      <th>Waktu Withdraw</th>
+                      <th>Kode Transaksi</th>
+                      <th>Member</th>
+                      <th>Ammount</th>
+                      <th>Status</th>
+                      <th>#</th>
+                  </tr>
+                </thead>
 
-            </table>
+              </table>
+            </div>
 
       </div>
     </div>
@@ -69,7 +69,6 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
-          responsive:true,
           ajax: {"url": "<?=base_url()?>adm-backend/withdraw/json_pending_withdraw", "type": "POST"},
           columns: [
               {
@@ -81,14 +80,21 @@ $(document).ready(function() {
                 "visible":false
               },
               {"data":"created"},
+              {"data":"kode_transaksi"},
               {"data":"nama",
                 render:function(data,type,row,meta)
                 {
-                  return '<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">'+data+'</a>';
+                  var str = `<p><i class="fa fa-user"></i> &nbsp;<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">`+data+`</a>&nbsp;|&nbsp;
+                              <span class="text-primary">`+row.username+`</span></p>
+                              <p><i class="fa fa-credit-card"></i> No.Rek : `+row.no_rekening+` (`+row.bank+`)</p>
+                              <p><i class="fa fa-id-card"></i> Nama Rek : `+row.nama_rekening+`</p>
+                              <p><i class="fa fa-money"></i> Ammount : <b class="text-danger">Rp.`+row.nominal+`</b></p>`;
+                  return str;
                 }
               },
               {
                 "data":"nominal",
+                "visible":false,
                 render:function(data,type,row,meta)
                 {
                   return "Rp. "+data;
@@ -105,6 +111,10 @@ $(document).ready(function() {
                 "orderable": false,
                 "className" : "text-center text-white"
               },
+              {"data":"username","visible":false},
+              {"data":"no_rekening","visible":false},
+              {"data":"nama_rekening","visible":false},
+              {"data":"bank","visible":false},
           ],
           order: [[0, 'desc']],
       });
