@@ -7,11 +7,21 @@ class Member_model extends MY_Model{
 
   function json($is_active)
   {
-    $this->datatables->select("id_member,nama,telepon,tb_auth.username,is_active,is_verifikasi");
+    $this->datatables->select("id_member,
+                                nama,
+                                telepon,
+                                tb_auth.username,
+                                tb_auth.level,
+                                is_active,
+                                is_verifikasi,
+                                config_paket.paket AS pakets,
+                                tb_member.paket");
     $this->datatables->from('tb_member');
     $this->datatables->join("tb_auth","tb_member.id_member = tb_auth.id_personal");
+    $this->datatables->join("config_paket","tb_member.paket = config_paket.id_paket");
     $this->datatables->where("is_active","$is_active");
     $this->datatables->where("is_verifikasi","1");
+    $this->datatables->where("level","member");
     $this->datatables->add_column('action',
                                    '<a href="'.site_url("adm-backend/member/detail/$1").'"class="text-primary"><i class="fa fa-file"></i> Detail</a>&nbsp;&nbsp;
                                    ',

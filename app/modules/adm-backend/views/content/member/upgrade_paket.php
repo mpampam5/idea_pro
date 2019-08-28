@@ -1,16 +1,12 @@
+<?php if ($paket->num_rows() > 0): ?>
 <form action="<?=$action?>" id="form">
   <div class="col-sm-12">
     <div class="form-group">
       <label>Upgrade Paket</label>
         <select class="form-control" name="paket" id="paket" style="color:#495057">
-          <?php if ($paket->num_rows() > 0): ?>
             <?php foreach ($paket->result() as $qry_paket): ?>
               <option <?=($row->paket==$qry_paket->id_paket)?"selected":""?> value="<?=$qry_paket->id_paket?>"><?=$qry_paket->paket?></option>
             <?php endforeach; ?>
-            <?php else: ?>
-              <option value="<?=$row->paket?>"> <?=paket($row->paket,'paket')?></option>
-          <?php endif; ?>
-
         </select>
     </div>
   </div>
@@ -68,3 +64,9 @@ $("#form").submit(function(e){
   });
 });
 </script>
+<?php else: ?>
+  <h4 class="text-center"> Member saat ini berada di paket teratas.</h4>
+  <p class="text-center border-top pt-4">
+    <button type='button' class='btn btn-secondary btn-sm text-white' data-dismiss='modal'>tutup</button>
+  </p>
+<?php endif; ?>
