@@ -16,6 +16,7 @@ class B_sponsor_model extends MY_Model{
     $this->datatables->select("bonus_sponsor.id_bonus_sponsor,
                                 bonus_sponsor.id_parent,
                                 bonus_sponsor.id_member,
+                                bonus_sponsor.keterangan,
                                 format(bonus_sponsor.total_bonus,2) AS total_bonus,
                                 DATE_FORMAT(bonus_sponsor.created,'%d/%m/%Y %H:%i') AS created,
                                 tb_member.nama,

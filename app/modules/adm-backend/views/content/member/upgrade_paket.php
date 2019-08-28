@@ -4,8 +4,9 @@
     <div class="form-group">
       <label>Upgrade Paket</label>
         <select class="form-control" name="paket" id="paket" style="color:#495057">
+          <option value="">-- pilih paket ---</option>
             <?php foreach ($paket->result() as $qry_paket): ?>
-              <option <?=($row->paket==$qry_paket->id_paket)?"selected":""?> value="<?=$qry_paket->id_paket?>"><?=$qry_paket->paket?></option>
+              <option value="<?=$qry_paket->id_paket?>"><?=$qry_paket->paket?></option>
             <?php endforeach; ?>
         </select>
     </div>

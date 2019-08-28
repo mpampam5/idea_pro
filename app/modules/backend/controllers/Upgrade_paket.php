@@ -38,7 +38,22 @@ class Upgrade_paket extends MY_Controller{
           $paket = $this->input->post('paket');
           $pakets = paket($paket,'pin')-paket(profile('paket'),'pin');
 
+          // insert bonus_sponsor
+          $referral_from = profile('referral_from');
+          $id_member_referral = profile_member_where(['kode_referral'=>$referral_from],"id_member");
 
+          $inser_b_sponsor = array('id_parent' =>  $id_member_referral,
+                                    'id_member' => sess('id_member'),
+                                    'created'   => date('Y-m-d h:i:s'),
+                                    'total_bonus'=> $this->balance->get_bonus_sponsor_upgrade_paket($pakets),
+                                    'keterangan'=> "Upgrade Paket <b class='text-danger'>".paket(profile('paket'),'paket')."</b> Ke <b class='text-danger'>".paket($paket,'paket')."</b>" ,
+                                  );
+
+          $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);
+
+
+
+          // bonus_pairing
           $query_pin = $this->model->query_cek_pin($pakets);
 
           foreach ($query_pin as $pin) {

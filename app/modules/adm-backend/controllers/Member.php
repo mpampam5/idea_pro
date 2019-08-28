@@ -211,8 +211,24 @@ class Member extends MY_Controller{
         $paket = $this->input->post('paket',true);
         $pakets = paket($paket,'pin')-paket(profile_member($id,'paket'),'pin');
 
+        //bonus_sponsor
+        $referral_from = profile_member($id,'referral_from');
+        $id_member_referral = profile_member_where(['kode_referral'=>$referral_from],"id_member");
+
+        $inser_b_sponsor = array('id_parent' =>  $id_member_referral,
+                                  'id_member' => $id,
+                                  'created'   => date('Y-m-d h:i:s'),
+                                  'total_bonus'=> $this->balance->get_bonus_sponsor_upgrade_paket($pakets),
+                                  'keterangan'=> "Upgrade Paket <b class='text-danger'>".paket(profile_member($id,'paket'),'paket')."</b> Ke <b class='text-danger'>".paket($paket,'paket')."</b>" ,
+                                );
+
+        $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);
+
         $update_paket = array("paket" => $paket);
         $this->db->update("tb_member",$update_paket,["id_member" => $id]);
+
+
+
 
         $this->load->library(array("btree"));
         //Bonus Pairing

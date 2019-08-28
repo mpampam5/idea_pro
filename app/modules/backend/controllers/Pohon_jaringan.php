@@ -233,7 +233,8 @@ class Pohon_jaringan extends MY_Controller{
           $inser_b_sponsor = array('id_parent' =>  $id_member_referral,
                                     'id_member' => $last_id_member,
                                     'created'   => date('Y-m-d h:i:s'),
-                                    'total_bonus'=> $this->balance->get_bonus_sponsor($paket)
+                                    'total_bonus'=> $this->balance->get_bonus_sponsor($paket),
+                                    'keterangan'=> "Penambahan member baru Paket <b class='text-danger'>".paket($paket,'paket')."</b>",
                                   );
 
           $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);

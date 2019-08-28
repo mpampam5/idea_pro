@@ -84,14 +84,14 @@ $(document).ready(function() {
                 }
               },
               {
-                "data":"nama",
-                render:function(data,type,row,meta)
+                "data":"keterangan",
+                render: function(data,type,row,meta)
                 {
-                  return 'Penambahan Mitra Baru <b>'+data+'</b> | <b>'+row.username+'</b> | <b>'+row.paket+'</b>';
+                  return '<b>'+row.nama+'</b>&nbsp;|&nbsp;<b class="text-primary">'+row.username+"</b>&nbsp;|&nbsp;"+data;
                 }
               },
+              {"data":"nama","visible":false},
               {"data":"username","visible":false},
-              {"data":"paket","visible":false},
           ],
           order: [[1, 'desc']],
       });
