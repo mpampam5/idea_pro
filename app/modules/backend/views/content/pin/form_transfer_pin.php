@@ -118,7 +118,7 @@ $("#form").submit(function(e){
                 loaderBg: '#f96868',
                 position: 'bottom-right',
               afterHidden: function (){
-                window.location.href = "<?=base_url()?>/backend/pin/transfer_pin.html";
+                window.location.href = "<?=base_url()?>backend/pin/history_transfer_pin.html";
               }
               });
 

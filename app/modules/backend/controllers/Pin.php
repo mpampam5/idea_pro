@@ -267,14 +267,14 @@ function trans_pin_action()
         $history_penerima = array('id_member' => $id_member_penerima,
                                   'tgl_transfer' => date('Y-m-d h:i:s'),
                                   'status' => 'menerima',
-                                  'keterangan' => "Telah menerima sebanyak <b class='text-danger'>$jumlah_pin</b> PIN dari <b class='text-danger'>".profile('username')."</b> | <b class='text-danger'>".profile('nama')." | <b class='text-danger'>".profile('telepon')."</b>"
+                                  'keterangan' => "Telah menerima sebanyak <b class='text-danger'>$jumlah_pin</b> PIN dari <b>".profile('nama')."</b> | <b class='text-primary'>".profile('username')."</b>"
                                   );
         $this->model->get_insert("history_transfer_pin",$history_penerima);
         // insert history pengirim
         $history_pengirim = array('id_member' => sess('id_member'),
                                   'tgl_transfer' => date('Y-m-d h:i:s'),
                                   'status' => 'mengirim',
-                                  'keterangan' => "Telah mengirim sebanyak <b class='text-danger'>$jumlah_pin</b> PIN Ke <b class='text-danger'>$username</b> | <b class='text-danger'>".profile_member($id_member_penerima,'nama')."</b> | <b class='text-danger'> ".profile_member($id_member_penerima,'telepon')."</b>"
+                                  'keterangan' => "Telah mengirim sebanyak <b class='text-danger'>$jumlah_pin</b> PIN Ke <b>".profile_member($id_member_penerima,'nama')."</b> | <b class='text-primary'>$username</b>"
                                   );
         $this->model->get_insert("history_transfer_pin",$history_pengirim);
 
