@@ -39,7 +39,7 @@ class Pohon_jaringan extends MY_Controller{
     $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
     $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|htmlspecialchars|required");
     $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("username","Username","trim|xss_clean|required|htmlspecialchars|alpha_dash|is_unique[tb_auth.username]",[
+    $this->form_validation->set_rules("username","Username","trim|xss_clean|required|htmlspecialchars|alpha_numeric|is_unique[tb_auth.username]",[
       "is_unique" => "Coba Username yang lain"
     ]);
     $this->form_validation->set_rules("password","Password","trim|xss_clean|required|min_length[5]");
