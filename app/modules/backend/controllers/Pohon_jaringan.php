@@ -13,6 +13,40 @@ class Pohon_jaringan extends MY_Controller{
     $this->load->library(array("btree"));
   }
 
+  function _rules()
+  {
+    $this->form_validation->set_rules("kode_referal","Username","trim|xss_clean|required|callback__cek_kode_ref",[
+      "required" => "Silahkan masukkan kode referal mitra anda."
+    ]);
+
+
+    $this->form_validation->set_rules("id_parent","id_parent","trim|xss_clean|required");
+    $this->form_validation->set_rules("posisi","posisi","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("nama","Nama","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("email","Email","trim|xss_clean|htmlspecialchars|required|valid_email");
+    $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|numeric|required");
+
+    $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("jk","Jenis Kelamin","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("provinsi","Provinsi","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kabupaten","Kabupaten/Kota","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required|htmlspecialchars|callback__cek_pin");
+    $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
+    $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean|htmlspecialchars|required");
+    $this->form_validation->set_rules("username","Username","trim|xss_clean|required|htmlspecialchars|alpha_dash|is_unique[tb_auth.username]",[
+      "is_unique" => "Coba Username yang lain"
+    ]);
+    $this->form_validation->set_rules("password","Password","trim|xss_clean|required|min_length[5]");
+    $this->form_validation->set_rules("v_password","Konfirmasi Password","trim|xss_clean|required|matches[password]");
+    $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
+  }
+
   function index(){
     $this->load->helper(['cek_pohon']);
     $this->template->set_title("Binary");
@@ -35,6 +69,43 @@ class Pohon_jaringan extends MY_Controller{
       redirect(site_url("backend/pohon_jaringan"),"refresh");
     }
 
+  }
+
+
+  function search()
+  {
+    $json = array('success'=>false,"alert"=>"","url"=>"");
+
+          $username = $this->input->post("username");
+            //
+            $where = array("username"=> $username,'level'=>"member");
+            //
+            // $query= $this->db->select('id_personal,username,level')
+            //                 ->from('tb_auth')
+            //                 ->where('level','member')
+            //                 ->like('username',"$username")
+            //                 ->get();
+
+            if ($row =  $this->model->get_where("tb_auth",$where)) {
+              if ($row->id_personal==sess('id_member')) {
+                $json['success'] = true;
+                $json['url'] = site_url("backend/pohon_jaringan");
+              }else {
+
+                $cek_anak = $this->btree->get_all_id_children(sess('id_member'));
+                if (in_array($row->id_personal,$cek_anak)) {
+                  $json['success'] = true;
+                  $json['url'] = site_url("backend/pohon_jaringan/show/".$row->id_personal);
+                }else {
+                  $json['alert'] = "Data tidak di temukan";
+                }
+              }
+            }else {
+              $json['alert'] = "Data tidak di temukan";
+            }
+
+
+    echo json_encode($json);
   }
 
 
@@ -71,39 +142,6 @@ class Pohon_jaringan extends MY_Controller{
       }
   }
 
-  function _rules()
-  {
-    $this->form_validation->set_rules("kode_referal","Username","trim|xss_clean|required|callback__cek_kode_ref",[
-      "required" => "Silahkan masukkan kode referal mitra anda."
-    ]);
-
-
-    $this->form_validation->set_rules("id_parent","id_parent","trim|xss_clean|required");
-    $this->form_validation->set_rules("posisi","posisi","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("nama","Nama","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("email","Email","trim|xss_clean|htmlspecialchars|required|valid_email");
-    $this->form_validation->set_rules("telepon","Telepon","trim|xss_clean|numeric|required");
-
-    $this->form_validation->set_rules("tempat_lahir","Tempat Lahir","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("tgl_lahir","Tanggal Lahir","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("jk","Jenis Kelamin","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("provinsi","Provinsi","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("kabupaten","Kabupaten/Kota","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required|htmlspecialchars|callback__cek_pin");
-    $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
-    $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("kota_pembukaan_rek","Kota/Kabupaten Pembukaan Rekening","trim|xss_clean|htmlspecialchars|required");
-    $this->form_validation->set_rules("username","Username","trim|xss_clean|required|htmlspecialchars|alpha_dash|is_unique[tb_auth.username]",[
-      "is_unique" => "Coba Username yang lain"
-    ]);
-    $this->form_validation->set_rules("password","Password","trim|xss_clean|required|min_length[5]");
-    $this->form_validation->set_rules("v_password","Konfirmasi Password","trim|xss_clean|required|matches[password]");
-    $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
-  }
 
   function tambah_action($serial_pin){
     if ($this->input->is_ajax_request()) {

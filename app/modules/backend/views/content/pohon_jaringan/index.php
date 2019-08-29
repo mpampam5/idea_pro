@@ -12,11 +12,19 @@
 
 <div class="row">
 
-  <?php if ($root->id_member!=sess('id_member')): ?>
+
+
   <div class="col-md-12 mb-4 text-center">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Masukkan Username" id="binary_username" autocomplete="off">
+      <div class="input-group-append">
+        <button style="" class="input-group-text text-white bg-primary" id="binary-search"><i class="fa fa-search"></i>&nbsp;&nbsp;Cari</button>
+      </div>
+    </div>
+    <?php if ($root->id_member!=sess('id_member')): ?>
     <a href="<?=site_url("backend/pohon_jaringan")?>" class="btn btn-info btn-sm text-white">Back To Top Parent</a>
-  </div>
   <?php endif; ?>
+</div>
 
 
 
@@ -174,15 +182,46 @@
       </div>
 
 
-
-      <!-- <script type="text/javascript">
-      $(document).on("click","#tambah",function(e){
+      <script type="text/javascript">
+      $(document).on("click","#binary-search",function(e){
         e.preventDefault();
-        $('.modal-dialog').removeClass('modal-sm')
-                          .removeClass('modal-lg')
-                          .addClass('modal-md');
-        $("#modalTitle").text('Tambah Member');
-        $('#modalContent').load($(this).attr('href'));
-        $("#modalGue").modal('show');
+        var val_username = $("#binary_username").val();
+
+        if (val_username=="") {
+          $.toast({
+            text: "form input tidak boleh kosong",
+            showHideTransition: 'slide',
+            icon: "error",
+            loaderBg: '#f96868',
+            position: 'bottom-right',
+          });
+        }else {
+          $.ajax({
+              url: "<?=base_url("backend/pohon_jaringan/search")?>",
+              type: "post",
+              data: {username: $("#binary_username").val()}, // Set data yang akan dikirim
+              dataType: "json",
+            }).done(function(json){
+              if (json.success!=true) {
+                $("#binary_username").val("");
+                $.toast({
+                  text: json.alert,
+                  showHideTransition: 'slide',
+                  icon: "error",
+                  loaderBg: '#f96868',
+                  position: 'bottom-right',
+                });
+
+              }else {
+                window.location.href = json.url;
+              }
+            });
+        }
+
+
+
+
+
+
       });
-      </script> -->
+      </script>
