@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from www.urbanui.com/justdo/template/demo/vertical-default-light/pages/samples/login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2019 23:08:25 GMT -->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -124,6 +122,4 @@
   </script>
 </body>
 
-
-<!-- Mirrored from www.urbanui.com/justdo/template/demo/vertical-default-light/pages/samples/login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Jul 2019 23:08:25 GMT -->
 </html>
