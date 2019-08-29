@@ -29,6 +29,7 @@
               <thead>
                 <tr class="bg-warning text-white">
                     <th width="10px">No</th>
+                    <th>Kode Transaksi</th>
                     <th>Id_member</th>
                     <th>Waktu Deposit</th>
                     <th>Member</th>
@@ -77,6 +78,7 @@ $(document).ready(function() {
                 "orderable": false,
                 "visible":false
               },
+              {"data":"kode_transaksi"},
               {"data":"id_member",
                 "visible":false
               },
@@ -84,7 +86,7 @@ $(document).ready(function() {
               {"data":"nama",
                 render:function(data,type,row,meta)
                 {
-                  return '<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">'+data+'</a>';
+                  return '<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">'+data+'</a> &nbsp;|&nbsp;<a class="text-primary">'+row.username+'</a>';
                 }
               },
               {
@@ -105,6 +107,7 @@ $(document).ready(function() {
                 "orderable": false,
                 "className" : "text-center text-white"
               },
+              {"data":"username","visible":false},
           ],
           order: [[0, 'desc']],
       });

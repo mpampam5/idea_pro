@@ -8,6 +8,7 @@ class Deposit_model extends MY_Model{
   function json_deposit_all()
   {
     $this->datatables->select(" trans_member_deposit.id_deposit,
+                                trans_member_deposit.kode_transaksi,
                                 DATE_FORMAT(trans_member_deposit.created,'%d/%m/%Y %h:%i') AS created,
                                 trans_member_deposit.id_member,
                                 format(trans_member_deposit.nominal,2) AS nominal,
@@ -24,6 +25,7 @@ class Deposit_model extends MY_Model{
   function json_deposit_add()
   {
     $this->datatables->select(" trans_member_deposit.id_deposit,
+                                trans_member_deposit.kode_transaksi,
                                 DATE_FORMAT(trans_member_deposit.created,'%d/%m/%Y %h:%i') AS created,
                                 trans_member_deposit.id_member,
                                 format(trans_member_deposit.nominal,2) AS nominal,

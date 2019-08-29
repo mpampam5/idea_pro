@@ -29,8 +29,9 @@
               <thead>
                 <tr class="bg-warning text-white">
                     <th width="10px">No</th>
+                    <th>Kode Transaksi</th>
                     <th>Id_member</th>
-                    <th>Waktu Deposit</th>
+                    <th>Waktu</th>
                     <th>Waktu Verifikasi</th>
                     <th>Member</th>
                     <th>Ammount</th>
@@ -77,15 +78,22 @@ $(document).ready(function() {
                 "orderable": false,
                 "visible":false
               },
+              {"data":"kode_transaksi"},
               {"data":"id_member",
                 "visible":false
               },
-              {"data":"created"},
-              {"data":"time_verif"},
+              {"data":"created",
+               render: function(data,type,row,meta)
+               {
+                 var str = '<p style="line-height:25px;">Deposit&nbsp;&nbsp;&nbsp;&nbsp;: '+data+'</p><p style="line-height:2px;">Verifikasi : '+row.time_verif+'</p>';
+                 return str;
+               }
+              },
+              {"data":"time_verif","visible":false},
               {"data":"nama",
                 render:function(data,type,row,meta)
                 {
-                  return '<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">'+data+'</a>';
+                  return '<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">'+data+'</a>&nbsp;|&nbsp;<a class="text-primary">'+row.username+'</a>';
                 }
               },
               {
@@ -101,6 +109,7 @@ $(document).ready(function() {
                     return '<span class="badge badge-success badge-pill text-white"> Terverifikasi</span>';
                 }
               },
+              {"data":"username","visible":false},
           ],
           order: [[0, 'desc']],
       });

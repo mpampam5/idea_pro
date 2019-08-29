@@ -64,7 +64,7 @@ class Deposit extends MY_Controller{
         $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
         if ($this->form_validation->run()) {
           $this->load->helper("pass_hash");
-          $data = [
+          $data = [       "kode_transaksi" => "DP-".date('dmYhis'),
                           "id_member"  => sess('id_member'),
                           "nominal"    => $this->input->post('nominal',true),
                           // "keterangan" => $this->input->post("keterangan",true),

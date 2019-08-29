@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
@@ -13,6 +10,12 @@
 </nav>
 
 
+<div class="row mb-2">
+  <div class="col-12">
+    <a href="<?=site_url("backend/deposit/add_new_deposit")?>" id="deposit_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New Deposit</a>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-12 stretch-card">
 
@@ -21,23 +24,25 @@
           <h4 class="card-title">List <?=$title?></h4>
           <div class="btn-group-header">
             <a href="#" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></a>
-            <a href="<?=site_url("backend/deposit/add_new_deposit")?>" id="deposit_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New Deposit</a>
           </div>
 
         <hr>
 
-            <table id="table" class="table table-bordered">
-              <thead>
-                <tr class="bg-warning text-white">
-                    <th width="10px">No</th>
-                    <th>Waktu Deposit</th>
-                    <th>Ammount</th>
-                    <th>Status</th>
-                    <th>#</th>
-                </tr>
-              </thead>
+            <div class="table-responsive">
+              <table id="table" class="table table-bordered">
+                <thead>
+                  <tr class="bg-warning text-white">
+                      <th width="10px">No</th>
+                      <th>Waktu Deposit</th>
+                      <th>Kode Transaksi</th>
+                      <th>Ammount</th>
+                      <th>Status</th>
+                      <th>#</th>
+                  </tr>
+                </thead>
 
-            </table>
+              </table>
+            </div>
 
       </div>
     </div>
@@ -68,7 +73,6 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
-          responsive:true,
           ajax: {"url": "<?=base_url()?>backend/deposit/json_add_deposit", "type": "POST"},
           columns: [
               {
@@ -77,6 +81,7 @@ $(document).ready(function() {
                 "visible":false
               },
               {"data":"created"},
+              {"data":"kode_transaksi"},
               {
                 "data":"nominal",
                 render:function(data,type,row,meta)
