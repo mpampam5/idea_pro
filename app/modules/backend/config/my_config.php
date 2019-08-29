@@ -10,6 +10,6 @@ $config['encrypt_gue']['encryption_mechanism'] = "aes-256-cbc";
 
 //konfigurasi email
 $config['email']      = "info@mpampam.com";
-$config['password']   = "zzzzz";
+$config['password']   = "dsdasasd";
 $config['smtp_host']  = "ssl://mail.mpampam.com";
 $config['smtp_port']  = "465";

@@ -107,7 +107,7 @@ class Pohon_jaringan extends MY_Controller{
 
   function tambah_action($serial_pin){
     if ($this->input->is_ajax_request()) {
-        $json = array('success'=>false, 'alert'=>array());
+        $json = array('success'=>false,'status'=>array(), 'alert'=>array());
         $this->load->library(array("form_validation"));
 
         $kode_referral      = $this->input->post("kode_referal",true);
@@ -139,7 +139,8 @@ class Pohon_jaringan extends MY_Controller{
 
         $this->_rules();
         if ($this->form_validation->run()) {
-
+            //START DB TRANS
+            $this->db->trans_start();
 
             $insert_member = [  "kode_referral" => "ref_$username",
                                 "referral_from" => "ref_".$kode_referral ,
@@ -247,7 +248,22 @@ class Pohon_jaringan extends MY_Controller{
           }
 
 
-          $json['alert'] = "Berhasil menambahkan member";
+
+          // Validasi DB trans
+          $this->db->trans_complete();
+          if ($this->db->trans_status() === FALSE)
+              {
+                $this->db->trans_rollback();
+                $json['status'] = "error";
+                $json['alert'] = "Gagal Menyimpan";
+              }else{
+                $this->db->trans_commit();
+                $this->_send_mail($email,$username,$nama,$telepon,$kode_referral,$nik,$paket,$password);
+                $json['status'] = "success";
+                $json['alert'] = "Berhasil menambahkan member";
+              }
+
+
           $json['success'] = true;
           $json['url'] = site_url("backend/pohon_jaringan");
         }else {
@@ -496,113 +512,53 @@ function kabupaten(){
     }
   }
 
+  function _send_mail($email,$username,$nama,$telepon,$kode_referral,$nik,$paket,$password)
+  {
 
 
+    $data = array('nama' => $nama,
+                  'nik' => $nik,
+                  'email' => $email,
+                  'telepon' => $telepon,
+                  'username' => $username,
+                  'password' => $password,
+                  'kode_referral' => $kode_referral,
+                  'paket' => paket($paket,'paket')
+                  );
+    $link = site_url();
+    $subject  = "Data Member";
 
-// function add_pairing($id_parent)
-// {
-//   //INSERT BONUS PAIRING
-//     // $id_parent = $this->input->post('id');
-//     $is_parent = $this->btree->cek_is_parent($id_parent);
-//
-//     foreach ($is_parent as $value) {
-//        $this->_pairing($value);
-//     }
-//
-// }
+    $template = $this->load->view('content/pohon_jaringan/email_template',$data,TRUE);
 
-
-
-
-//BONUS PAIRING
-  // function _pairing($id,$last_id_member)
-  // {
-  //
-  //     $pin_left = [];
-  //     $pin_right = [];
-  //
-  //
-  //     $left = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_left_id_children($id))), 0);
-  //     foreach ($left as $id_left) {
-  //       $pin_left[ ]= paket(profile_member($id_left,'paket'),'pin');
-  //     }
-  //
-  //     $right = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_right_id_children($id))), 0);
-  //     foreach ($right as $id_right) {
-  //       $pin_right[]= paket(profile_member($id_right,'paket'),'pin');
-  //     }
-  //
-  //     if (in_array($last_id_member,$left)) {
-  //       $posisi = 'kiri';
-  //     }elseif (in_array($last_id_member,$right)) {
-  //       $posisi = 'kanan';
-  //     }else {
-  //       $posisi = '';
-  //     }
-  //
-  //
-  //     $cek_pairing = $this->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa,posisi")
-  //                             ->from('bonus_pairing')
-  //                             ->where('id_member',$id)
-  //                             ->order_by('created','desc')
-  //                             ->limit(1)
-  //                             ->get();
-  //
-  //     if ($cek_pairing->num_rows()==1) {
-  //       $cek_sisa = $cek_pairing->row()->sisa;
-  //       $cek_posisi_pairing = $cek_pairing->row()->posisi;
-  //     }else {
-  //       $cek_sisa = 0;
-  //       $cek_posisi_pairing = "";
-  //     }
-  //
-  //
-  //     $total_l = array_sum($pin_left) * config_all('harga_pin');
-  //     $total_r = array_sum($pin_right) * config_all('harga_pin');
-  //
-  //     $total_pin_baru = paket(profile_member($last_id_member,'paket'),'pin') * config_all('harga_pin');
-  //
-  //     if ($cek_posisi_pairing == $posisi) {
-  //         $jml = $cek_sisa + $total_pin_baru;
-  //         $total_bonus = 0;
-  //     }else {
-  //
-  //
-  //
-  //
-  //         $jml = abs($cek_sisa-$total_pin_baru);
-  //         if ($cek_sisa > 0) {
-  //           if ($cek_sisa < $total_pin_baru) {
-  //               $hitungan = $cek_sisa;
-  //           }elseif($cek_sisa > $total_pin_baru){
-  //               $hitungan = $total_pin_baru;
-  //           }else {
-  //               $hitungan = $cek_sisa;
-  //           }
-  //         }else {
-  //           $hitungan = 0;
-  //         }
-  //
-  //         $total_bonus = (config_all('komisi_pairing')/100) * $hitungan;
-  //     }
-  //
-  //     if ($total_l > $total_r) {
-  //         $posisi_baru = 'kiri';
-  //     }elseif($total_l < $total_r){
-  //         $posisi_baru = 'kanan';
-  //     }else{
-  //         $posisi_baru = '';
-  //     }
-  //
-  //
-  //     $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$jml,"posisi"=>$posisi_baru,"created"=>date("Y-m-d h:i:s"));
-  //     $this->model->get_insert('bonus_pairing', $insert);
-  //
-  //
-  //   return;
-  // }
+    // $this->load->library('email');
+    // $config = array();
+    $config['charset']      = 'utf-8';
+    // $config['useragent']    = 'Codeigniter';
+    $config['protocol']     = "smtp";
+    $config['mailtype']     = "html";
+    $config['smtp_host']    = $this->config->item("smtp_host");//pengaturan smtp
+    $config['smtp_port']    = $this->config->item("smtp_port");
+    $config['smtp_user']    = $this->config->item("email"); // isi dengan email kamu
+    $config['smtp_pass']    = $this->config->item("password"); // isi dengan password kamu
+    $config['crlf']         ="\r\n";
+    $config['newline']      ="\r\n";
+    // $config['wordwrap']     = FALSE;
+    //memanggil library email dan set konfigurasi untuk pengiriman email
+    // $this->email->initialize($config);
+    $this->load->library('email',$config);
+    //konfigurasi pengiriman
+    $this->email->from($config['smtp_user'],"Binary-tree");
+    $this->email->to($email);
+    $this->email->subject($subject);
+    $this->email->message($template);
+    return $this->email->send();
+  }
 
 
+function template()
+{
+  $this->load->view('content/pohon_jaringan/email_template');
+}
 
 
 
