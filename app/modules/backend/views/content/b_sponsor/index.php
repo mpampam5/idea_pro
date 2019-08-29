@@ -93,7 +93,7 @@ $(document).ready(function() {
               {"data":"nama","visible":false},
               {"data":"username","visible":false},
           ],
-          order: [[1, 'desc']],
+          order: [[0, 'desc']],
       });
 });
 

@@ -29,11 +29,26 @@ class Member_model extends MY_Model{
 
   function json_my_referral()
   {
-    $this->datatables->select("id_member,email,nama,referral_from,telepon,kode_referral,is_active,is_verifikasi,DATE_FORMAT(created,'%d/%m/%Y %h:%i') AS created");
+    $this->datatables->select("id_member,
+                                email,
+                                nama,
+                                referral_from,
+                                telepon,
+                                kode_referral,
+                                is_active,
+                                is_verifikasi,
+                                DATE_FORMAT(tb_member.created,'%d/%m/%Y %h:%i') AS created,
+                                username,
+                                level,
+                                config_paket.paket AS pakets
+                                ");
     $this->datatables->from('tb_member');
+    $this->datatables->join('tb_auth','id_member = id_personal');
+    $this->datatables->join('config_paket','tb_member.paket = config_paket.id_paket');
     $this->datatables->where("referral_from",$this->session->userdata('kode_referral'));
     $this->datatables->where("is_verifikasi","1");
     $this->datatables->where("is_active","1");
+    $this->datatables->where("level","member");
     return $this->datatables->generate();
   }
 

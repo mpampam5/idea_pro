@@ -87,7 +87,7 @@ $(document).ready(function() {
               {"data":"nama",
                 render:function(data,type,row,meta)
                 {
-                  var str = ` <p>Waktu Verifikasi : `+row.time_verif+`</p>
+                  var str = ` <p> <i class="fa fa-calendar"></i> Waktu Verifikasi : `+row.time_verif+`</p>
                               <p><i class="fa fa-user"></i> &nbsp;<a href="<?=base_url()?>adm-backend/member/detail/'+row.id_member+'" target="_blank">`+data+`</a>&nbsp;|&nbsp;
                               <span class="text-primary">`+row.username+`</span></p>
                               <p><i class="fa fa-credit-card"></i> No.Rek : `+row.no_rekening+` (`+row.bank+`)</p>

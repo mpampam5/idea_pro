@@ -41,8 +41,9 @@ class Login extends CI_Controller{
             $username = $this->input->post("username",true);
             $password = $this->input->post("password");
 
-            $str_raplace_username = str_replace('\'','mpampamdotcom',$username);
-            $where = array("level" => "member",
+            // $str_raplace_username = str_replace('\'','mpampamdotcom',$username);
+            $where = array( "username" => $username,
+                            "level" => "member",
                             "is_active" => '1',
                             "is_verifikasi" => '1');
             $qry = $this->db->select("tb_auth.id_personal,
@@ -56,7 +57,7 @@ class Login extends CI_Controller{
                                       tb_member.is_verifikasi")
                             ->from("tb_auth")
                             ->join("tb_member","tb_member.id_member = tb_auth.id_personal")
-                            ->where("(username = '$str_raplace_username' OR email='$str_raplace_username')")
+                            // ->where("(username = '$str_raplace_username' OR email='$str_raplace_username')")
                             ->where($where)
                             ->get();
             if ($qry->num_rows() > 0) {

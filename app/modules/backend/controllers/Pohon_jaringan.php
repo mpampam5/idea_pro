@@ -198,7 +198,7 @@ class Pohon_jaringan extends MY_Controller{
                                 "paket"         => $paket,
                                 "is_verifikasi" => "1",
                                 "posisi"        => $posisi,
-                                "created"       => date("Y-m-d h:i:s"),
+                                "created"       => date("Y-m-d H:i:s"),
                             ];
           // insert member
           $this->model->get_insert("tb_member",$insert_member);
@@ -221,7 +221,7 @@ class Pohon_jaringan extends MY_Controller{
                           "password"     =>  pass_encrypt(date("dmYhis"),$password),
                           "token"        =>  date("dmYhis"),
                           "level"        =>  "member",
-                          "created"      =>  date("Y-m-d h:i:s")
+                          "created"      =>  date("Y-m-d H:i:s")
                         ];
           // insert data auth
           $this->model->get_insert("tb_auth",$data_akun);
@@ -250,7 +250,7 @@ class Pohon_jaringan extends MY_Controller{
             $insert_trans_pin_pakai = array('serial_pin' => $serial_pin,
                                             'id_pin_trans'  => $pin->id_pin_trans,
                                             'id_member_pakai'  =>$last_id_member,
-                                            'tgl_aktivasi' => date('Y-m-d h:i:s'),
+                                            'tgl_aktivasi' => date('Y-m-d H:i:s'),
                                             'status'  => "registrasi");
             $this->model->get_insert("trans_pin_pakai",$insert_trans_pin_pakai);
 
@@ -271,7 +271,7 @@ class Pohon_jaringan extends MY_Controller{
 
           $inser_b_sponsor = array('id_parent' =>  $id_member_referral,
                                     'id_member' => $last_id_member,
-                                    'created'   => date('Y-m-d h:i:s'),
+                                    'created'   => date('Y-m-d H:i:s'),
                                     'total_bonus'=> $this->balance->get_bonus_sponsor($paket),
                                     'keterangan'=> "Penambahan member baru Paket <b class='text-danger'>".paket($paket,'paket')."</b>",
                                   );
@@ -296,14 +296,14 @@ class Pohon_jaringan extends MY_Controller{
                 $json['alert'] = "Gagal Menyimpan";
               }else{
                 $this->db->trans_commit();
-                $this->_send_mail($email,$username,$nama,$telepon,$kode_referral,$nik,$paket,$password);
+                // $this->_send_mail($email,$username,$nama,$telepon,$kode_referral,$nik,$paket,$password);
                 $json['status'] = "success";
                 $json['alert'] = "Berhasil menambahkan member";
               }
 
 
           $json['success'] = true;
-          $json['url'] = site_url("backend/pohon_jaringan");
+          $json['url'] = site_url("backend/pohon_jaringan/show/$last_id_member");
         }else {
           foreach ($_POST as $key => $value)
             {
@@ -484,7 +484,7 @@ function kabupaten(){
       if ($this->balance->stok_pin(sess('id_member')) >= $pins) {
         $update_member = [ "is_verifikasi" =>"1",
                            "posisi" => $posisi,
-                           "created" => date("Y-m-d h:i:s")
+                           "created" => date("Y-m-d H:i:s")
                           ];
         $this->model->get_update("tb_member",$update_member,["id_member"=>$id_member_verif]);
 
@@ -510,7 +510,7 @@ function kabupaten(){
           $insert_trans_pin_pakai = array('serial_pin' => $serial_pin,
                                           'id_pin_trans'  => $pin->id_pin_trans,
                                           'id_member_pakai'  =>$id_member_verif,
-                                          'tgl_aktivasi' => date('Y-m-d h:i:s'),
+                                          'tgl_aktivasi' => date('Y-m-d H:i:s'),
                                           'status'  => "registrasi");
           $this->model->get_insert("trans_pin_pakai",$insert_trans_pin_pakai);
 
@@ -524,7 +524,7 @@ function kabupaten(){
         //insert bonus SPONSOR
         $inser_b_sponsor = array('id_parent' => sess('id_member') ,
                                   'id_member' => $id_member_verif,
-                                  'created'   => date('Y-m-d h:i:s'),
+                                  'created'   => date('Y-m-d H:i:s'),
                                   'total_bonus'=> $this->balance->get_bonus_sponsor($paket)
                                 );
 
@@ -593,10 +593,6 @@ function kabupaten(){
   }
 
 
-function template()
-{
-  $this->load->view('content/pohon_jaringan/email_template');
-}
 
 
 

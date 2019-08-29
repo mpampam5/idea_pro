@@ -1,13 +1,11 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
     <li class="breadcrumb-item"><a href="<?=site_url("backend/index")?>">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Network</li>
     <li class="breadcrumb-item active" aria-current="page"><?=$title?></li>
   </ol>
 </nav>
@@ -20,22 +18,26 @@
       <div class="card-body">
 
           <h4 class="card-title">List <?=$title?></h4>
-
+          <div class="btn-group-header">
+            <button class="btn btn-primary btn-sm btn-icon-text" type="button" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></button>
+          </div>
         <hr>
 
-            <table id="table" class="table">
-              <thead>
-                <tr class="bg-warning text-white">
-                    <th width="10px">#</th>
-                    <th>Mulai Bergabung</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Telepon</th>
-                    <th>Link Referral</th>
-                </tr>
-              </thead>
+            <div class="table-responsive">
+              <table id="table" class="table table-bordered">
+                <thead>
+                  <tr class="bg-warning text-white">
+                    <th>id</th>
+                      <th>Mulai Bergabung</th>
+                      <th>Mitra</th>
+                      <th>Email</th>
+                      <th>Telepon</th>
+                      <th>Link Referral</th>
+                  </tr>
+                </thead>
 
-            </table>
+              </table>
+            </div>
 
       </div>
     </div>
@@ -66,29 +68,33 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
-          responsive:true,
           ajax: {"url": "<?=base_url()?>backend/member/json_my_referral", "type": "POST"},
           columns: [
               {
                 "data": "id_member",
                 "orderable": false,
-                render:function(data, type, meta, row)
-                {
-                  return "";
-                }
+                "visible":false
               },
               {"data":"created"},
-              {"data":"nama"},
-              {"data":"email"},
-              {"data":"telepon"},
-              {"data":"kode_referral",
-                render:function(data,type,row,meta)
-                  {
-                      return '<a href="#"><?=base_url()?>referral/'+data+'.html</a>';
-                  }
-              }
+              {"data":"nama",
+                render:function(data,type,row,meta){
+                  var str = `<p><i class="fa fa-user"></i> `+data+`&nbsp;|&nbsp;`+row.username+`</p>
+                              <p><i class="fa fa-product-hunt"></i> `+row.pakets+`</p>
+                             <p><i class="fa fa-phone"></i> `+row.telepon+`</p>
+                             <p><i class="fa fa-envelope"></i> `+row.email+`</p>
+                             <p><i class="fa fa-tags"></i> <a class="text-primary"><?=base_url()?>referral/`+row.kode_referral+`.html</a></p>
+                            `
+                  return str;
+                }
+
+              },
+              {"data":"email","visible":false},
+              {"data":"telepon","visible":false},
+              {"data":"kode_referral","visible":false},
+              {"data":"username","visible":false},
+              {"data":"pakets","visible":false}
           ],
-          order: [[1, 'desc']]
+          order: [[0, 'desc']]
       });
 });
 
