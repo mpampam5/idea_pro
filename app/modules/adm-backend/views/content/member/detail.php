@@ -566,7 +566,7 @@ $(document).ready(function(){
     $('.modal-dialog').removeClass('modal-lg')
                       .removeClass('modal-sm')
                       .addClass('modal-md');
-    $("#modalTitle").text('Upgrade Paket');
+    $("#modalTitle").text('Ubah Status stockis');
     $('#modalContent').load($(this).attr('href'));
     $("#modalGue").modal('show');
   });

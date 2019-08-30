@@ -185,7 +185,7 @@ public $is_parent = array();
         $cek_pairing = $this->ci->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa,posisi")
                                 ->from('bonus_pairing')
                                 ->where('id_member',$id)
-                                ->order_by('created','desc')
+                                ->order_by('id_bonus_pairing','desc')
                                 ->limit(1)
                                 ->get();
 
