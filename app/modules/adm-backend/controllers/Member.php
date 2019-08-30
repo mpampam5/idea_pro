@@ -362,4 +362,19 @@ class Member extends MY_Controller{
           }
       }
 
+
+
+
+
+      function export_excel($is_active="1")
+      {
+        if ($is_active=="1") {
+            $data['status'] = "AKTIF";
+        }else {
+            $data['status'] = "TIDAK AKTIF";
+        }
+        $data['query'] = $this->model->export_excel($is_active);
+        $this->load->view("content/member/export_excel",$data);
+      }
+
 }

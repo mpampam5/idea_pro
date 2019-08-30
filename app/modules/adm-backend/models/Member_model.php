@@ -80,4 +80,30 @@ class Member_model extends MY_Model{
   }
 
 
+
+  function export_excel($is_active)
+  {
+    $query = $this->db->select("id_member,
+                                nama,
+                                telepon,
+                                tb_auth.username,
+                                tb_auth.level,
+                                is_active,
+                                is_verifikasi,
+                                config_paket.paket AS pakets,
+                                tb_member.paket,
+                                tb_member.email,
+                                tb_member.telepon,
+                                tb_member.created")
+                      ->from('tb_member')
+                      ->join("tb_auth","tb_member.id_member = tb_auth.id_personal")
+                      ->join("config_paket","tb_member.paket = config_paket.id_paket")
+                      ->where("is_active","$is_active")
+                      ->where("is_verifikasi","1")
+                      ->where("level","member")
+                      ->get();
+    return $query;
+  }
+
+
 }

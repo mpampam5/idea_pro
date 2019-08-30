@@ -13,6 +13,10 @@
 
 
 <div class="row">
+  <div class="col-12 mb-2">
+    <a href="<?=site_url("adm-backend/member/export_excel/$is_active")?>" name="button" class="btn btn-sm btn-success"><i class="fa fa-file-excel-o"></i> Export Excel</a>
+  </div>
+
   <div class="col-12 stretch-card">
 
     <div class="card">
@@ -20,10 +24,9 @@
 
           <h4 class="card-title">List <?=$title?></h4>
 
-          <!-- <div class="btn-group-header">
-            <a href="#" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></a>
-            <a href="<?=site_url("adm-backend/administrator/add")?>" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Tambah</a>
-          </div> -->
+          <div class="btn-group-header">
+              <button type="button" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></button>
+          </div>
 
         <hr>
 
@@ -34,8 +37,8 @@
                   <tr class="bg-warning text-white">
                       <th width="10px">No</th>
                       <th>Nama</th>
-                      <th>Paket</th>
                       <th>Username</th>
+                      <th>Paket</th>
                       <th>Status</th>
                       <th>Actions</th>
                   </tr>
@@ -83,10 +86,8 @@ $(document).ready(function() {
                 "visible":false
               },
               {"data":"nama"},
+              {"data":"username"},
               {"data":"pakets"},
-              {
-                "data":"username"
-              },
               {
                 "data":"is_active",
                 render:function(data, type, meta, row)

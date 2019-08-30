@@ -21,12 +21,16 @@ function json_pin_verif_order()
                               DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
                               config_bank.nama_rekening,
                               config_bank.no_rekening,
-                              ref_bank.bank");
+                              ref_bank.bank,
+                              tb_auth.username,
+                              tb_auth.level");
   $this->datatables->from("trans_order_pin");
   $this->datatables->join("tb_member","trans_order_pin.id_member = tb_member.id_member");
+  $this->datatables->join("tb_auth","tb_member.id_member = tb_auth.id_personal");
   $this->datatables->join("config_bank","config_bank.id_rekening = trans_order_pin.id_config_bank","left");
   $this->datatables->join("ref_bank","config_bank.id_bank = ref_bank.id","left");
   $this->datatables->where("status","approved");
+  $this->datatables->where("tb_auth.level","member");
   $this->datatables->add_column('action','<a href="'.site_url("adm-backend/pin/detail/$1").'"><i class="fa fa-file"></i> Detail</a>','id_order_pin');
   return $this->datatables->generate();
 }
@@ -48,12 +52,16 @@ function json_pin_pending_order()
                               DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
                               config_bank.nama_rekening,
                               config_bank.no_rekening,
-                              ref_bank.bank");
+                              ref_bank.bank,
+                              tb_auth.username,
+                              tb_auth.level");
   $this->datatables->from("trans_order_pin");
   $this->datatables->join("tb_member","trans_order_pin.id_member = tb_member.id_member");
+  $this->datatables->join("tb_auth","tb_member.id_member = tb_auth.id_personal");
   $this->datatables->join("config_bank","config_bank.id_rekening = trans_order_pin.id_config_bank","left");
   $this->datatables->join("ref_bank","config_bank.id_bank = ref_bank.id","left");
   $this->datatables->where("status","pending");
+  $this->datatables->where("tb_auth.level","member");
   $this->datatables->add_column('action','<a href="'.site_url("adm-backend/pin/detail/$1").'"><i class="fa fa-file"></i> Detail</a>','id_order_pin');
   return $this->datatables->generate();
 }
@@ -74,12 +82,16 @@ function detail_pin_order($id)
                               DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
                               config_bank.nama_rekening,
                               config_bank.no_rekening,
-                              ref_bank.bank")
+                              ref_bank.bank,
+                              tb_auth.username,
+                              tb_auth.level")
                       ->from("trans_order_pin")
                       ->join("tb_member","trans_order_pin.id_member = tb_member.id_member")
+                      ->join("tb_auth","tb_member.id_member = tb_auth.id_personal")
                       ->join("config_bank","config_bank.id_rekening = trans_order_pin.id_config_bank","left")
                       ->join("ref_bank","config_bank.id_bank = ref_bank.id","left")
                       ->where("trans_order_pin.id_order_pin",$id)
+                      ->where("tb_auth.level","member")
                       ->get()
                       ->row();
 }

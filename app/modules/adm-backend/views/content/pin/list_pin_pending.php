@@ -85,7 +85,7 @@ $(document).ready(function() {
               {"data":"nama",
                 render(data,type,row,meta)
                 {
-                  return '<a href="<?=base_url()."adm-backend/member/detail/"?>'+row.id_member+'.html" target="_blank">'+data+'</a>'
+                  return '<a href="<?=base_url()."adm-backend/member/detail/"?>'+row.id_member+'.html" target="_blank">'+data+'</a>&nbsp|&nbsp;<a class="text-primary">'+row.username+'</a>'
                 }
               },
               {"data":"jumlah_pin","class":"text-center"},
@@ -96,7 +96,7 @@ $(document).ready(function() {
               },
               {"data":"action","class":"text-center","orderable":false},
               {"data":"id_member","visible":false},
-
+              {"data":"username","visible":false},
           ],
           order: [[0, 'desc']],
       });
