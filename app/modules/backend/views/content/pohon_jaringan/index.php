@@ -14,7 +14,7 @@
 
 
 
-  <div class="col-md-12 mb-4 text-center">
+  <div class="col-md-12 mb-4">
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Masukkan Username" id="binary_username" autocomplete="off">
       <div class="input-group-append">

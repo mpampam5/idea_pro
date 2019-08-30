@@ -330,6 +330,14 @@ public $is_parent = array();
         $this->ci->model->get_insert('bonus_pairing', $insert);
 
 
+        // hapus data bonus pairing yang sudah tidak terpakai,
+        // $last_id_bonus_pairing = $this->db->insert_id();
+        // $whe = array('id_member' => $id,
+        //              'total_bonus' => 0,
+        //              'id_bonus_pairing!='=> $last_id_bonus_pairing
+        //             );
+        // $this->ci->db->where($whe)
+        //               ->delete("bonus_pairing");
       return;
     }
 
