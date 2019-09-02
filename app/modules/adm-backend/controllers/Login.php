@@ -51,6 +51,18 @@ class Login extends CI_Controller{
             if ($qry->num_rows() > 0) {
                 $this->load->helper("adm-backend/pass_hash");
                 if (pass_decrypt($qry->row()->token,$password,$qry->row()->password)==true) {
+
+                  $this->load->library('user_agent');
+
+
+                  $insert_log_login = array('id_member' =>$qry->row()->id_personal ,
+                                            'level' => "admin",
+                                            'time_login' => date('Y-m-d H:i:s'),
+                                            'ip_address' => $this->input->ip_address(),
+                                            'user_agent' => "Browser ".$this->agent->browser()." v.".$this->agent->version()." (".$this->agent->platform().")"
+                                            );
+                  $this->db->insert('log_login',$insert_log_login);
+
                   $session = array(
                                     'id_admin'     => $qry->row()->id_personal,
                                     'login'         => true
