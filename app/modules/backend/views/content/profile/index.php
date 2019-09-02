@@ -5,7 +5,27 @@
   </ol>
 </nav>
 
-
+<div class="row">
+  <div class="col-12 m-b-10 p-b-10">
+    <div class="card">
+      <div class="card-body">
+        <div class="col-lg-12">
+            <div class="text-center pb-2">
+            <img src="<?=base_url()?>_template/back/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3">
+            <div class="mb-3">
+              <h5 style="text-transform:uppercase;"><?=$row->nama?></h5>
+              <p class="w-75 mx-auto mb-3">
+                <span>Mulai Bergabung  <?=date('d/m/Y',strtotime($row->created))?></span><br>
+                <span class="mt-2 badge badge-pill badge-danger" style="text-transform:uppercase;"><?=$row->status_stockis?></span>
+                <span class="mt-2 badge badge-pill badge-success"> <?=paket($row->paket,'paket')?></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- open row -->
 <div class="row">
 
@@ -17,13 +37,8 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <!-- foto -->
-            <div class="col-sm-3">
-              <img src="<?=base_url()?>_template/back/images/faces/face12.jpg" style="width:100%" alt="">
-            </div>
-            <!-- end foto -->
             <!-- akun -->
-            <div class="offset-sm-1 col-sm-8">
+            <div class="col-sm-12">
               <form class="" action="<?=site_url("backend/profile/action_pwd")?>" id="form_akun">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Kode Referral</label>
@@ -53,17 +68,19 @@
                   </div>
                 </div>
 
+                <div id="pw_lama"></div>
+
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Password baru</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="pwd_baru" name="pwd_baru" autocomplete="off" readonly value="*****" placeholder="Password Baru">
+                    <input type="password" class="form-control" id="pwd_baru" name="pwd_baru" autocomplete="off" readonly value="*****" placeholder="Password Baru">
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Konfirmasi Password Baru</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="pwd_kon" name="pwd_kon" autocomplete="off" readonly value="*****" placeholder="Konfirmasi Password">
+                    <input type="password" class="form-control" id="pwd_kon" name="pwd_kon" autocomplete="off" readonly value="*****" placeholder="Konfirmasi Password">
                   </div>
                 </div>
 
@@ -85,7 +102,14 @@
   <script type="text/javascript">
     $(document).on("click","#btn-akun-edit",function(e){
       e.preventDefault();
-      $("#pwd_baru").prop("readonly",false).val("").focus();
+      $("#pw_lama").html(`<div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Password Lama</label>
+                            <div class="col-sm-9">
+                              <input type="password" class="form-control" id="pwd_lama" name="pwd_lama" autocomplete="off" placeholder="Password Lama">
+                            </div>
+                          </div>`);
+
+      $("#pwd_baru").prop("readonly",false).val("");
       $("#pwd_kon").prop("readonly",false).val("");
 
       $("#button-akun").html(`<button type="button" class="btn btn-md btn-danger" id="akun-batal"> Batal</button>
@@ -94,6 +118,7 @@
 
     $(document).on("click","#akun-batal",function(e){
       e.preventDefault();
+      $("#pw_lama").html("");
       $('#form_akun .text-danger').remove();
       $("#pwd_baru").prop("readonly",true).val("*****");
       $("#pwd_kon").prop("readonly",true).val("*****");
@@ -126,6 +151,7 @@
                     position: 'bottom-right',
                     afterHidden: function () {
                       removeLoaders(".card");
+                      $("#pw_lama").html("");
                       $('#form_akun .text-danger').remove();
                       $("#pwd_baru").prop("readonly",true).val("*****");
                       $("#pwd_kon").prop("readonly",true).val("*****");
@@ -159,7 +185,7 @@
         <h4>Data Personal</h4>
       </div>
       <div class="card-body">
-        <form action="<?=site_url("backend/profile/action_personal")?>" id="form_personal">
+        <form action="<?=site_url("backend/profile/action_personal")?>" id="form_personal" autocomplete="off">
 
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Nik</label>
@@ -292,12 +318,6 @@
             </div>
           </div>
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Paket</label>
-            <div class="col-sm-9">
-              <input type="text" name="paket" id="paket" class="form-control" value="<?=paket($row->paket,'paket')?>" readonly>
-            </div>
-          </div>
 
 
           <div class="offset-sm-3 col-sm-9 pl-0" id="button-personal">

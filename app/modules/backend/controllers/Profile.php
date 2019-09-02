@@ -30,6 +30,9 @@ class Profile extends MY_Controller{
     if ($this->input->is_ajax_request()) {
         $json = array('success'=>false, 'alert'=>array());
         $id_member = sess("id_member");
+        $this->form_validation->set_rules('pwd_lama', 'Password lama', 'required|callback__cek_password',[
+          "required" => "Silahkan masukkan password anda untuk memastikan bahwa anda benar pemilik akun <b>".profile("nama")."</b>",
+        ]);
         $this->form_validation->set_rules('pwd_baru', 'Password Baru', 'required|min_length[5]');
         $this->form_validation->set_rules('pwd_kon', 'Konfirmasi Password Baru', 'required|matches[pwd_baru]');
         $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');

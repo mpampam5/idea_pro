@@ -21,6 +21,7 @@ class Profile_model extends MY_Model{
                               tb_member.jk,
                               tb_member.tempat_lahir,
                               tb_member.tgl_lahir,
+                              tb_member.status_stockis,
                               tb_member.kode_referral,
                               tb_member.posisi,
                               tb_member.referral_from,
