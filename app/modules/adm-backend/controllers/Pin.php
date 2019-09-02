@@ -61,7 +61,7 @@ class Pin extends MY_Controller{
         }else {
           if ($row = $this->model->get_where("trans_order_pin",['id_order_pin'=>$id])) {
 
-            $this->model->get_update("trans_order_pin",['status'=>"approved"],['id_order_pin'=>$row->id_order_pin]);
+            $this->model->get_update("trans_order_pin",['status'=>"approved","time_verif"=>date('Y-m-d H:i:s')],['id_order_pin'=>$row->id_order_pin]);
 
 
             $jumlah_pin = $row->jumlah_pin;

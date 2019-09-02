@@ -24,6 +24,7 @@
               <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">No</th>
               <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">Kode Transaksi</th>
               <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">Waktu Order</th>
+              <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">Waktu Verifikasi</th>
               <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">Stocklist Pembelian</th>
               <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">Nama | username</th>
               <th style="border-top:1px solid #505050;border-right:1px solid #505050;border-left:1px solid #505050;padding: 5px 7px 5px 7px;">Keterangan</th>
@@ -37,6 +38,7 @@
               <td style="border:1px solid #505050;text-align:center"><?=$no++?></td>
               <td style="border:1px solid #505050;padding: 5px 7px 5px 7px;"><?=$row->kode_transaksi?></td>
               <td style="border:1px solid #505050;padding: 5px 7px 5px 7px;"><?=$row->tgl_order?></td>
+              <td style="border:1px solid #505050;padding: 5px 7px 5px 7px;"><?=$row->time_verif?></td>
               <td style="border:1px solid #505050;padding: 5px 7px 5px 7px;"><?=$row->stocklist_pembelian?></td>
               <td style="border:1px solid #505050;padding: 5px 7px 5px 7px;"><?=$row->nama?>&nbsp;|&nbsp;<?=$row->username?></td>
               <td style="border:1px solid #505050;padding: 5px 7px 5px 7px;">

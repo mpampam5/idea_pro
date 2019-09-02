@@ -45,6 +45,11 @@
           </tr>
 
           <tr>
+            <th>Tanggal Verifikasi</th>
+            <td><?=$row->time_verif?></td>
+          </tr>
+
+          <tr>
             <th>Stocklist Pembelian</th>
             <td><?=$row->stocklist_pembelian?></td>
           </tr>
