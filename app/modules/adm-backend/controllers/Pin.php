@@ -100,7 +100,11 @@ class Pin extends MY_Controller{
 
 
 
-
+  function export_excel()
+  {
+    $data['query'] = $this->model->export_excel();
+    $this->load->view("content/pin/export_excel",$data);
+  }
 
 
 

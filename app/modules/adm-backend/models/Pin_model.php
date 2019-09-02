@@ -98,4 +98,36 @@ function detail_pin_order($id)
 
 
 
+  function export_excel()
+  {
+    $query =  $this->db->select("trans_order_pin.id_order_pin,
+                              trans_order_pin.id_member,
+                              trans_order_pin.kode_transaksi,
+                              trans_order_pin.stocklist_pembelian,
+                              trans_order_pin.jumlah_pin,
+                              trans_order_pin.jumlah_bayar,
+                              trans_order_pin.sumber_dana,
+                              trans_order_pin.id_config_bank,
+                              trans_order_pin.`status`,
+                              tb_member.nama,
+                              tb_member.kode_referral,
+                              DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
+                              config_bank.nama_rekening,
+                              config_bank.no_rekening,
+                              ref_bank.bank,
+                              tb_auth.username,
+                              tb_auth.level")
+                      ->from("trans_order_pin")
+                      ->join("tb_member","trans_order_pin.id_member = tb_member.id_member")
+                      ->join("tb_auth","tb_member.id_member = tb_auth.id_personal")
+                      ->join("config_bank","config_bank.id_rekening = trans_order_pin.id_config_bank","left")
+                      ->join("ref_bank","config_bank.id_bank = ref_bank.id","left")
+                      ->where("tb_auth.level","member")
+                      ->get();
+
+    return $query;
+  }
+
+
+
 }
