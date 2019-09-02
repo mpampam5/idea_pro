@@ -32,12 +32,22 @@
             </div>
 
             <div class="form-group">
-              <label for="">Minimal Withdraw (Rp)</label>
+              <label for="">Minimal Deposit (Rp) <span style="font-size:12px" class="text-primary"> Silahkan berikan nilai 0 jika tidak ada batasan.</span></label>
+              <input type="text" class="form-control" id="min_deposit" name="min_deposit" placeholder="Minimal Deposit (Rp)" value="<?=$row->min_deposit?>">
+            </div>
+
+            <div class="form-group">
+              <label for="">Maximal Deposit (Rp) <span style="font-size:12px" class="text-primary"> Silahkan berikan nilai 0 jika tidak ada batasan.</span></label>
+              <input type="text" class="form-control" id="max_deposit" name="max_deposit" placeholder="Maximal Deposit (Rp)" value="<?=$row->max_deposit?>">
+            </div>
+
+            <div class="form-group">
+              <label for="">Minimal Withdraw (Rp) <span style="font-size:12px" class="text-primary"> Silahkan berikan nilai 0 jika tidak ada batasan.</span></label>
               <input type="text" class="form-control" id="min_withdraw" name="min_withdraw" placeholder="Minimal Withdraw (Rp)" value="<?=$row->min_withdraw?>">
             </div>
 
             <div class="form-group">
-              <label for="">Maximal Withdraw (Rp)</label>
+              <label for="">Maximal Withdraw (Rp) <span style="font-size:12px" class="text-primary"> Silahkan berikan nilai 0 jika tidak ada batasan.</span></label>
               <input type="text" class="form-control" id="max_withdraw" name="max_withdraw" placeholder="Maximal Withdraw (Rp)" value="<?=$row->max_withdraw?>">
             </div>
 
