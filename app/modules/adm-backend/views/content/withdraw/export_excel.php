@@ -9,7 +9,7 @@
 
     <?php
     header("Content/type: application/octet-stream");
-    header("Content-Disposition: attachment; filename= data deposit member Approved ".date('d-m-y H-i-s').".xls");
+    header("Content-Disposition: attachment; filename= data Withdraw member Approved ".date('d-m-y H-i-s').".xls");
     header("Pragma: no-cache");
     header("Expires: 0");
     ?>
