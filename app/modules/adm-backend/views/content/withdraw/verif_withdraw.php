@@ -1,19 +1,22 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
     <li class="breadcrumb-item"><a href="<?=site_url("backend/index")?>">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Withdraw</li>
     <li class="breadcrumb-item active" aria-current="page"><?=$title?></li>
   </ol>
 </nav>
 
 
 <div class="row">
+
+  <div class="col-12 mb-2">
+    <a href="<?=site_url("adm-backend/withdraw/export_excel")?>" target="_blank" name="button" class="btn btn-sm btn-success"><i class="fa fa-file-excel-o"></i> Export Excel</a>
+  </div>
+
   <div class="col-12 stretch-card">
 
     <div class="card">
@@ -25,21 +28,23 @@
 
         <hr>
 
-            <table id="table" class="table table-bordered">
-              <thead>
-                <tr class="bg-warning text-white">
-                    <th width="10px">No</th>
-                    <th>Id_member</th>
-                    <th>Waktu Withdraw</th>
-                    <th>Waktu Verifikasi</th>
-                    <th>Kode Transaksi</th>
-                    <th>Member</th>
-                    <th>Ammount</th>
-                    <th>Status</th>
-                </tr>
-              </thead>
+            <div class="table-responsive">
+              <table id="table" class="table table-bordered">
+                <thead>
+                  <tr class="bg-warning text-white">
+                      <th width="10px">No</th>
+                      <th>Id_member</th>
+                      <th>Waktu Withdraw</th>
+                      <th>Waktu Verifikasi</th>
+                      <th>Kode Transaksi</th>
+                      <th>Member</th>
+                      <th>Ammount</th>
+                      <th>Status</th>
+                  </tr>
+                </thead>
 
-            </table>
+              </table>
+            </div>
 
       </div>
     </div>
@@ -70,7 +75,6 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
-          responsive:true,
           ajax: {"url": "<?=base_url()?>adm-backend/withdraw/json_verifikasi_withdraw", "type": "POST"},
           columns: [
               {

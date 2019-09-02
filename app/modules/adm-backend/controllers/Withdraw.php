@@ -14,7 +14,7 @@ class Withdraw extends MY_Controller{
 
   function withdraw_verifikasi()
   {
-    $this->template->set_title("Withdraw Terverifikasi");
+    $this->template->set_title("Withdraw Approved");
     $this->template->view("content/withdraw/verif_withdraw");
   }
 
@@ -76,7 +76,11 @@ class Withdraw extends MY_Controller{
   }
 
 
-
+  function export_excel()
+  {
+    $data['query'] = $this->model->export_excel();
+    $this->load->view("content/withdraw/export_excel",$data);
+  }
 
 
 

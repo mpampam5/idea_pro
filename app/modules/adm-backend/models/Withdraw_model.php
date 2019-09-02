@@ -63,4 +63,34 @@ class Withdraw_model extends MY_Model{
     return $this->datatables->generate();
   }
 
+
+  function export_excel()
+  {
+    $query = $this->db->select(" trans_member_withdraw.id_withdraw,
+                                trans_member_withdraw.kode_transaksi,
+                                DATE_FORMAT(trans_member_withdraw.created,'%d/%m/%Y %h:%i') AS created,
+                                DATE_FORMAT(trans_member_withdraw.time_verif,'%d/%m/%Y %h:%i') AS time_verif,
+                                trans_member_withdraw.id_member,
+                                trans_member_withdraw.nominal,
+                                trans_member_withdraw.keterangan,
+                                trans_member_withdraw.status,
+                                tb_member.nama,
+                                trans_member_rek.id_bank,
+                                trans_member_rek.no_rekening,
+                                trans_member_rek.nama_rekening,
+                                ref_bank.bank,
+                                tb_auth.username,
+                                tb_auth.level")
+                          ->from('trans_member_withdraw')
+                          ->join("tb_member","trans_member_withdraw.id_member = tb_member.id_member")
+                          ->join("tb_auth","tb_member.id_member = tb_auth.id_personal")
+                          ->join("trans_member_rek","trans_member_rek.id_member = tb_member.id_member")
+                          ->join("ref_bank","trans_member_rek.id_bank = ref_bank.id")
+                          ->where("trans_member_withdraw.status","verifikasi")
+                          ->where("tb_auth.level","member")
+                          ->get();
+
+    return $query;
+  }
+
 }
