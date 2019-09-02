@@ -183,7 +183,7 @@ public $is_parent = array();
         }
 
 
-        $cek_pairing = $this->ci->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa,posisi")
+        $cek_pairing = $this->ci->db->select("id_bonus_pairing,id_member,total_bonus,created,sisa,posisi")
                                 ->from('bonus_pairing')
                                 ->where('id_member',$id)
                                 ->order_by('id_bonus_pairing','desc')
@@ -240,6 +240,14 @@ public $is_parent = array();
         $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$jml,"posisi"=>$posisi_baru,"created"=>date("Y-m-d h:i:s"));
         $this->ci->model->get_insert('bonus_pairing', $insert);
 
+        // hapus data bonus pairing yang sudah tidak terpakai,
+        $last_id_bonus_pairing = $this->ci->db->insert_id();
+        $whe = array('id_member' => $id,
+                     'total_bonus' => 0,
+                     'id_bonus_pairing!='=> $last_id_bonus_pairing
+                    );
+        $this->ci->db->where($whe)
+                      ->delete("bonus_pairing");
 
       return;
     }
@@ -272,7 +280,7 @@ public $is_parent = array();
         }
 
 
-        $cek_pairing = $this->ci->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa,posisi")
+        $cek_pairing = $this->ci->db->select("id_bonus_pairing,id_member,total_bonus,created,sisa,posisi")
                                 ->from('bonus_pairing')
                                 ->where('id_member',$id)
                                 ->order_by('id_bonus_pairing','desc')
@@ -331,13 +339,13 @@ public $is_parent = array();
 
 
         // hapus data bonus pairing yang sudah tidak terpakai,
-        // $last_id_bonus_pairing = $this->db->insert_id();
-        // $whe = array('id_member' => $id,
-        //              'total_bonus' => 0,
-        //              'id_bonus_pairing!='=> $last_id_bonus_pairing
-        //             );
-        // $this->ci->db->where($whe)
-        //               ->delete("bonus_pairing");
+        $last_id_bonus_pairing = $this->ci->db->insert_id();
+        $whe = array('id_member' => $id,
+                     'total_bonus' => 0,
+                     'id_bonus_pairing!='=> $last_id_bonus_pairing
+                    );
+        $this->ci->db->where($whe)
+                      ->delete("bonus_pairing");
       return;
     }
 
