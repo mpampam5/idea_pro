@@ -51,4 +51,30 @@ class Deposit_model extends MY_Model{
     return $this->datatables->generate();
   }
 
+
+  function export_excel()
+  {
+    $query =  $this->db->select(" trans_member_deposit.id_deposit,
+                                trans_member_deposit.kode_transaksi,
+                                DATE_FORMAT(trans_member_deposit.created,'%d/%m/%Y jam %h:%i') AS created,
+                                DATE_FORMAT(trans_member_deposit.time_verif,'%d/%m/%Y jam %h:%i') AS time_verif,
+                                trans_member_deposit.id_member,
+                                trans_member_deposit.nominal,
+                                trans_member_deposit.keterangan,
+                                trans_member_deposit.status,
+                                tb_member.nama,
+                                tb_auth.username,
+                                tb_auth.level
+                                ")
+                        ->from('trans_member_deposit')
+                        ->join("tb_member","trans_member_deposit.id_member = tb_member.id_member")
+                        ->join("tb_auth","tb_member.id_member = tb_auth.id_personal")
+                        ->where("trans_member_deposit.status","verifikasi")
+                        ->where("tb_auth.level","member")
+                        ->get();
+
+
+    return $query;
+  }
+
 }

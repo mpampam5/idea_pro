@@ -14,7 +14,7 @@ class Deposit extends MY_Controller{
 
   function deposit_verifikasi()
   {
-    $this->template->set_title("Deposit Terverifikasi");
+    $this->template->set_title("Deposit Approved");
     $this->template->view("content/deposit/verif_deposit");
   }
 
@@ -73,6 +73,13 @@ class Deposit extends MY_Controller{
           }
       echo json_encode($json);
     }
+  }
+
+
+  function export_excel()
+  {
+    $data['query'] = $this->model->export_excel();
+    $this->load->view("content/deposit/export_excel",$data);
   }
 
 

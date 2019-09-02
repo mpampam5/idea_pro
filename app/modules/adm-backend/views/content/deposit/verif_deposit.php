@@ -8,12 +8,21 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
     <li class="breadcrumb-item"><a href="<?=site_url("backend/index")?>">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Deposit</li>
     <li class="breadcrumb-item active" aria-current="page"><?=$title?></li>
   </ol>
 </nav>
 
 
+
+
 <div class="row">
+
+  <div class="col-12 mb-2">
+    <a href="<?=site_url("adm-backend/deposit/export_excel")?>" target="_blank" name="button" class="btn btn-sm btn-success"><i class="fa fa-file-excel-o"></i> Export Excel</a>
+  </div>
+
+
   <div class="col-12 stretch-card">
 
     <div class="card">
