@@ -11,7 +11,7 @@ class Upgrade_paket_model extends MY_Model{
     $query = $this->db->where('pin >',paket(profile('paket'),'pin'))
                       ->order_by('pin','ASC')
                       ->get('config_paket');
-    return $query->result();
+    return $query;
   }
 
   function query_cek_pin($limit)

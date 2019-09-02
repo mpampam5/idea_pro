@@ -6,45 +6,47 @@
   </ol>
 </nav>
 
+<?php if ($paket->num_rows() > 0): ?>
 <div class="row">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title"> Form <?=ucfirst($title)?></h4>
+        <h4 class="card-title"> <?=ucfirst($title)?></h4>
         <hr>
 
 
-          <p>Anda saat ini berada di paket <b><?=paket(profile('paket'),'paket')?></b></p>
+            <p>Anda saat ini berada di paket <b><?=paket(profile('paket'),'paket')?></b></p>
 
-          <form action="<?=$action?>" id="form" autocomplete="off">
-
-
-            <div class="form-group">
-              <label for="">Pilih Paket</label>
-              <select class="form-control" name="paket" id="paket" style="color:#000;">
-                <option value="">Pilih Paket</option>
-                <?php foreach ($paket as $paket): ?>
-                  <option value="<?=$paket->id_paket?>"><?=$paket->paket?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="">Password</label>
-              <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan Password">
-            </div>
-
-            <hr>
+            <form action="<?=$action?>" id="form" autocomplete="off">
 
 
-            <div class="row">
-              <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary btn-sm" name="submit" id="submit">Upgrade Paket</button>
+              <div class="form-group">
+                <label for="">Pilih Paket</label>
+                <select class="form-control" name="paket" id="paket" style="color:#000;">
+                  <option value="">Pilih Paket</option>
+                  <?php foreach ($paket->result() as $paket): ?>
+                    <option value="<?=$paket->id_paket?>"><?=$paket->paket?></option>
+                  <?php endforeach; ?>
+                </select>
               </div>
-            </div>
+
+              <div class="form-group">
+                <label for="">Password</label>
+                <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan Password">
+              </div>
+
+              <hr>
 
 
-          </form>
+              <div class="row">
+                <div class="col-sm-12">
+                  <button type="submit" class="btn btn-primary btn-sm" name="submit" id="submit">Upgrade Paket</button>
+                </div>
+              </div>
+
+
+            </form>
+
 
       </div>
     </div>
@@ -101,3 +103,24 @@ $("#form").submit(function(e){
 
 
 </script>
+
+
+<?php else: ?>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title"> <?=ucfirst($title)?></h4>
+          <hr>
+
+
+          <h5>saat ini anda berada di paket teratas.</h5>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<?php endif; ?>
