@@ -112,7 +112,7 @@ class Withdraw extends MY_Controller{
 
             $this->model->cancel_withdraw("trans_member_withdraw",["id_withdraw"=>$id]);
 
-            $json['alert'] = "Deposit Berhasil Di Cancel.";
+            $json['alert'] = "Withdraw Berhasil Di Cancel.";
             $json['success'] =  true;
           }else {
             foreach ($_POST as $key => $value)
@@ -130,11 +130,19 @@ class Withdraw extends MY_Controller{
     {
       if ($str <= $this->balance->total_balance(sess('id_member'))) {
         if ($str < config_all('min_withdraw')) {
-          $this->form_validation->set_message('_cek_balance', 'Minimal Withdraw Rp.'.format_rupiah(config_all('min_withdraw')));
-          return false;
-        }elseif ($str > config_all('max_withdraw')) {
-          $this->form_validation->set_message('_cek_balance', 'Maximal Withdraw Rp.'.format_rupiah(config_all('max_withdraw')));
-          return false;
+          if (config_all('min_withdraw')!=0) {
+            $this->form_validation->set_message('_cek_balance', 'Minimal Withdraw Rp.'.format_rupiah(config_all('min_withdraw')));
+            return false;
+          }else {
+            return true;
+          }
+        }elseif ($str > config_all('max_withdraw')){
+            if (config_all('max_withdraw')!=0) {
+              $this->form_validation->set_message('_cek_balance', 'Maximal Withdraw Rp.'.format_rupiah(config_all('max_withdraw')));
+              return false;
+            }else {
+              return true;
+            }
         }else {
           return true;
         }
