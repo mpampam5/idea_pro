@@ -1,6 +1,12 @@
   <form action="<?=$action?>" id="form" autocomplete="off">
     <?php if ($button=="add"): ?>
       <p>Silahkan Masukkan Nominal Deposit Anda.</p>
+      <?php if (config_all('min_deposit')!=0): ?>
+        <p class="text-primary">Minimal Deposit <b>Rp.<?=format_rupiah(config_all('min_deposit'))?></b></p>
+      <?php endif; ?>
+      <?php if (config_all('max_deposit')!=0): ?>
+        <p class="text-primary">Maximal Deposit <b>Rp.<?=format_rupiah(config_all('max_deposit'))?></b></p>
+      <?php endif; ?>
       <?php else: ?>
         <p>Anda Yakin Ingin Membatalkan Deposit Anda?</p>
     <?php endif; ?>

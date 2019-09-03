@@ -56,7 +56,7 @@ class Deposit extends MY_Controller{
   {
     if ($this->input->is_ajax_request()) {
         $json = array('success'=>false, 'alert'=>array());
-        $this->form_validation->set_rules('nominal', 'Ammount', 'xss_clean|required|numeric');
+        $this->form_validation->set_rules('nominal', 'Ammount', 'xss_clean|required|numeric|callback__cek_deposit');
         // $this->form_validation->set_rules('keterangan', 'Keterangan', 'xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'required|callback__cek_password',[
           "required" => "Silahkan masukkan password anda untuk memastikan bahwa anda benar pemilik akun <b>".profile("nama")."</b>",
@@ -124,6 +124,30 @@ class Deposit extends MY_Controller{
 
         echo json_encode($json);
     }
+  }
+
+
+
+  function _cek_deposit($str)
+  {
+      if ($str < config_all('min_deposit')) {
+        if (config_all('min_deposit')!=0) {
+          $this->form_validation->set_message('_cek_deposit', 'Minimal Deposit Rp.'.format_rupiah(config_all('min_deposit')));
+          return false;
+        }else {
+          return true;
+        }
+      }elseif ($str > config_all('max_deposit')){
+          if (config_all('max_deposit')!=0) {
+            $this->form_validation->set_message('_cek_deposit', 'Maximal Deposit Rp.'.format_rupiah(config_all('max_deposit')));
+            return false;
+          }else {
+            return true;
+          }
+      }else {
+        return true;
+      }
+
   }
 
 // END ADD DEPOSIT
