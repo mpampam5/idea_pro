@@ -297,8 +297,8 @@ class Pohon_jaringan extends MY_Controller{
               }else{
                 $this->db->trans_commit();
                 // $this->_send_mail($email,$username,$nama,$telepon,$kode_referral,$nik,$paket,$password);
+                  $json['alert'] = "Berhasil menambahkan member";
                 $json['status'] = "success";
-                $json['alert'] = "Berhasil menambahkan member";
               }
 
 
@@ -554,6 +554,8 @@ function kabupaten(){
   {
 
 
+    error_reporting(0);
+
     $data = array('nama' => $nama,
                   'nik' => $nik,
                   'email' => $email,
@@ -568,28 +570,34 @@ function kabupaten(){
 
     $template = $this->load->view('content/pohon_jaringan/email_template',$data,TRUE);
 
-    // $this->load->library('email');
-    // $config = array();
+    $host = config_umum("smtp_host");
+    $port = config_umum("smtp_port");
+    $user = config_umum("smtp_user");
+    $pass = decrypt_gue(config_umum("smtp_pass"));
+
     $config['charset']      = 'utf-8';
-    // $config['useragent']    = 'Codeigniter';
     $config['protocol']     = "smtp";
     $config['mailtype']     = "html";
-    $config['smtp_host']    = $this->config->item("smtp_host");//pengaturan smtp
-    $config['smtp_port']    = $this->config->item("smtp_port");
-    $config['smtp_user']    = $this->config->item("email"); // isi dengan email kamu
-    $config['smtp_pass']    = $this->config->item("password"); // isi dengan password kamu
+    $config['smtp_host']    = "$host";//pengaturan smtp
+    $config['smtp_port']    = $port;
+    $config['smtp_user']    = "$user"; // isi dengan email kamu
+    $config['smtp_pass']    = $pass; // isi dengan password kamu
+    $config['smtp_timeout'] = 4; //4 second
     $config['crlf']         ="\r\n";
     $config['newline']      ="\r\n";
-    // $config['wordwrap']     = FALSE;
-    //memanggil library email dan set konfigurasi untuk pengiriman email
-    // $this->email->initialize($config);
+
     $this->load->library('email',$config);
     //konfigurasi pengiriman
+
     $this->email->from($config['smtp_user'],"Binary-tree");
     $this->email->to($email);
     $this->email->subject($subject);
     $this->email->message($template);
-    return $this->email->send();
+    if ($this->email->send()) {
+      return 1;
+    }else {
+      return 0;
+    }
   }
 
 

@@ -7,6 +7,13 @@ function sess($str)
   return $ci->session->userdata($str);
 }
 
+function config_umum($field)
+{
+  $ci = get_instance();
+  $query = $ci->db->get_where('config_umum',['id'=>999])
+                  ->row();
+  return $query->$field;
+}
 
 function config_all($field)
 {

@@ -10,7 +10,7 @@ class MY_Controller extends CI_Controller{
         $this->session->sess_destroy();
         redirect(site_url("member-panel"));
     }
-    $this->load->config('my_config');
+    // $this->load->config('my_config');
     $this->load->library(array('backend/template','form_validation','encrypt','balance'));
     $this->load->helper(array('backend/encsecurity',"backend/backend_member"));
   }
