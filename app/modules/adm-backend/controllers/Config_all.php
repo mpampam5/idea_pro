@@ -11,6 +11,7 @@ class Config_all extends MY_Controller{
     //Codeigniter : Write Less Do More
     $this->load->model('Config_all_model','model');
   }
+  
 
   function _rules()
   {
@@ -27,7 +28,7 @@ class Config_all extends MY_Controller{
   function index()
   {
     if ($row = $this->model->get_where('config_all',["id_config"=>1])) {
-      $this->template->set_title("Umum");
+      $this->template->set_title("Financial");
       $data['row'] = $row;
       $this->template->view("content/config_all/index",$data);
     }else {
@@ -39,7 +40,7 @@ class Config_all extends MY_Controller{
   function update()
   {
     if ($row = $this->model->get_where('config_all',["id_config"=>1])) {
-      $this->template->set_title("Umum");
+      $this->template->set_title("Financial");
       $data['row'] = $row;
       $this->template->view("content/config_all/form",$data);
     }else {
