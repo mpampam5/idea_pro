@@ -51,7 +51,7 @@
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth px-0">
         <div class="row w-100 mx-0">
-          <div class="col-lg-6 mx-auto">
+          <div class="col-lg-9 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="text-center mb-3">
                 <h3>Registrasi Member</h3>
@@ -59,6 +59,10 @@
               <!-- <div class="brand-logo">
                 <img src="http://www.urbanui.com/justdo/template/images/logo.svg" alt="logo">
               </div> -->
+
+              <p class="text-center">
+                Harap masukkan data yang valid, untuk mempermudah proses verifikasi dan transaksi.
+              </p>
 
               <div id="alert"></div>
 
@@ -277,9 +281,16 @@
 
 
 
-                <div class="mt-5">
-                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" disabled name="submit" id="submit">Registrasi</button>
+                <div class="mt-5 mb-3">
+                  <button type="submit" class="btn btn-primary btn-lg font-weight-medium auth-form-btn btn-sm" disabled name="submit" id="submit"> Registrasi</button>
                 </div>
+
+                <div class="alert alert-info">
+                  <p class="text-center">
+                    Harap diperhatikan! Agar bisa menerima dana yang Withdraw, mohon pastikan bahwa Anda memiliki rekening bank yang terdaftar dengan nama Anda sendiri sesuai dengan kartu identitas (KTP)
+                  </p>
+                </div>
+
                 <div class="text-center mt-4 font-weight-light">
                   <!-- <h5>Baca <a href="#">Aturan</a></h5> -->
                   Sudah memiliki akun? <a href="<?=site_url("member-panel")?>" class="text-primary">Login</a>
